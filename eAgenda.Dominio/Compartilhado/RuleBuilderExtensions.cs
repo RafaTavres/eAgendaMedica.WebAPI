@@ -13,7 +13,7 @@ namespace eAgendaMedica.Dominio
         public static IRuleBuilder<T, string> CRM<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             var options = ruleBuilder
-                .Matches(@"(\(?\d{2}\)?\s)?(\d{4,5}\-\d{4})");
+                .Matches(@"[0-9]{5}-[A-Z]{2}");
 
             return options;
         }

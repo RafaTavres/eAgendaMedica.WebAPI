@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eAgendaMedica.WebAPI", "eAgendaMedica.WebAPI\eAgendaMedica.WebAPI.csproj", "{DFC296CF-3281-46F5-98D5-B718622A37C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAgendaMedica.WebAPI", "eAgendaMedica.WebAPI\eAgendaMedica.WebAPI.csproj", "{DFC296CF-3281-46F5-98D5-B718622A37C3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Distribuicao", "1-Distribuicao", "{D0C9680E-2234-482D-8A40-793F9B42D18E}"
 EndProject
@@ -23,13 +23,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.1-Testes Unitarios", "4.1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.2-Testes de Integracao", "4.2-Testes de Integracao", "{02DB47C0-D02D-48AE-B1FE-2A96247727A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eAgendaMedica.Aplicacao", "eAgendaMedica.Aplicacao\eAgendaMedica.Aplicacao.csproj", "{B5E5B5AF-4E4F-4BAD-B0B0-8F216B7E3630}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAgendaMedica.Aplicacao", "eAgendaMedica.Aplicacao\eAgendaMedica.Aplicacao.csproj", "{B5E5B5AF-4E4F-4BAD-B0B0-8F216B7E3630}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eAgendaMedica.Dominio", "eAgenda.Dominio\eAgendaMedica.Dominio.csproj", "{BE39549C-6D4C-4B5D-A764-E77F4B026207}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAgendaMedica.Dominio", "eAgenda.Dominio\eAgendaMedica.Dominio.csproj", "{BE39549C-6D4C-4B5D-A764-E77F4B026207}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eAgendaMedica.Infra.Orm", "eAgenda.Infra.Orm\eAgendaMedica.Infra.Orm.csproj", "{1E11839F-3888-42AA-8D6C-350B06A7F03A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAgendaMedica.Infra.Orm", "eAgenda.Infra.Orm\eAgendaMedica.Infra.Orm.csproj", "{1E11839F-3888-42AA-8D6C-350B06A7F03A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{D424D090-586E-4BC3-80B9-5008138E70D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAgenda.Dominio.Test", "TestProject1\eAgenda.Dominio.Test.csproj", "{D424D090-586E-4BC3-80B9-5008138E70D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

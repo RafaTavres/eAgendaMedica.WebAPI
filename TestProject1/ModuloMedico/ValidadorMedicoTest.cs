@@ -1,4 +1,4 @@
-﻿using eAgenda.Dominio.ModuloAtividade;
+﻿using eAgendaMedica.Dominio.ModuloAtividade;
 using eAgendaMedica.Dominio.ModuloMedico;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eAgenda.Dominio.Test.ModuloMedico
+namespace eAgendaMedica.Dominio.Test.ModuloMedico
 {
     [TestClass]
     public class ValidadorMedicoTest

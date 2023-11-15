@@ -1,3 +1,11 @@
+using eAgenda.WebApi.Config.SwaggerConfig;
+using eAgenda.WebApi.Config;
+using eAgenda.WebApi.Filters;
+using eAgendaMedica.WebApi.Config.AutomapperConfig;
+using eAgendaMedica.WebApi.Config;
+using Microsoft.AspNetCore.Mvc;
+using Serilog;
+
 namespace eAgendaMedica.WebAPI
 {
     public class Program
@@ -6,9 +14,36 @@ namespace eAgendaMedica.WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
 
-            builder.Services.AddControllers();
+
+            // Add services to the container.
+            builder.Services.Configure<ApiBehaviorOptions>(config =>
+            {
+                config.SuppressModelStateInvalidFilter = true;
+
+            });
+
+
+
+            Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Information()
+              .WriteTo.Console()
+              .CreateLogger();
+
+            builder.Logging.ClearProviders();
+
+            builder.Services.AddSerilog(Log.Logger);
+
+            builder.Services.ConfigurarInjecaoDependencia(builder.Configuration);
+
+            builder.Services.ConfigurarAutoMapper();
+
+            builder.Services.ConfigurarSwagger();
+
+            builder.Services.AddControllers(config =>
+            {
+                config.Filters.Add<SerilogActionFilter>();
+            });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -21,6 +56,8 @@ namespace eAgendaMedica.WebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseMiddleware<ManipuladorExcecoes>();
 
             app.UseHttpsRedirection();
 

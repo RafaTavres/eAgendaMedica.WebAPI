@@ -1,12 +1,14 @@
 using AutoMapper;
+using eAgenda.WebApi.Controllers.Shared;
 using eAgendaMedica.Aplicacao.ModuloMedico;
+using eAgendaMedica.WebAPI.ViewModels.ModuloMedico;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eAgendaMedica.WebAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class MedicoController : ControllerBase
+    [Route("api/medicos")]
+    public class MedicoController : ApiControllerBase
     {
 
         private readonly ServicoMedico servicoMedico;
@@ -19,13 +21,17 @@ namespace eAgendaMedica.WebAPI.Controllers
         }
 
         [HttpGet]
+
+        [ProducesResponseType(typeof(List<ListarMedicoViewModel>), 200)]
+        [ProducesResponseType(typeof(string[]), 404)]
+        [ProducesResponseType(typeof(string[]), 500)]
         public async Task<IActionResult> SeleciontarTodos()
         {
-            //var categoriaResult = servicoMedico.SelecionarTodos();
+            var medicoResult = servicoMedico.SelecionarTodos();
 
-            //var viewModel = mapeador.Map<List<ListarCategoriaViewModel>>(categoriaResult.Value);
+            var viewModel = mapeador.Map<List<ListarMedicoViewModel>>(medicoResult.Value);
 
-            //return Ok(viewModel);
+            return Ok(viewModel);
         }
     }
 }

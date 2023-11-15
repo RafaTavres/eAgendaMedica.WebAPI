@@ -1,10 +1,8 @@
-﻿using eAgendaMedica.Dominio;
-using eAgendaMedica.Dominio.ModuloAtividade;
+﻿
 using eAgendaMedica.Dominio.ModuloMedico;
 using FluentValidation;
-using FluentValidation.Validators;
 
-namespace eAgenda.Dominio.ModuloAtividade
+namespace eAgendaMedica.Dominio.ModuloAtividade
 {
 
     public class ValidadorMedico : AbstractValidator<Medico>

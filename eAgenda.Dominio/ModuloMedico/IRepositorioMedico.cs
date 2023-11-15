@@ -5,7 +5,7 @@ using eAgendaMedica.Dominio.Compartilhado;
 using eAgendaMedica.Dominio.ModuloAtividade;
 using eAgendaMedica.Dominio.ModuloMedico;
 
-namespace eAgenda.Dominio.ModuloAtividade
+namespace eAgendaMedica.Dominio.ModuloAtividade
 {
     public interface IRepositorioMedico : IRepositorio<Medico>
     {

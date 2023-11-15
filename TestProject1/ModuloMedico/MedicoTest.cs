@@ -1,4 +1,3 @@
-using eAgenda.Dominio.ModuloAtividade;
 using eAgendaMedica.Dominio.ModuloMedico;
 
 namespace eAgendaMedica.Dominio.Test.ModuloMedico

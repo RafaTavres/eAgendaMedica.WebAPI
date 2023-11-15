@@ -2,9 +2,8 @@
 using System;
 using System.Threading.Tasks;
 using eAgendaMedica.Dominio.Compartilhado;
-using eAgendaMedica.Dominio.ModuloAtividade;
 
-namespace eAgenda.Dominio.ModuloAtividade
+namespace eAgendaMedica.Dominio.ModuloAtividade
 {
     public interface IRepositorioAtividade : IRepositorio<Atividade>
     {

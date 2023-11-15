@@ -1,4 +1,4 @@
-﻿using eAgenda.Dominio.ModuloAtividade;
+﻿using eAgendaMedica.Dominio.ModuloAtividade;
 using eAgendaMedica.Dominio;
 using eAgendaMedica.Dominio.ModuloMedico;
 using FluentResults;
@@ -23,81 +23,89 @@ namespace eAgendaMedica.Aplicacao.ModuloMedico
             this.contextoPersistencia = contextoPersistencia;
         }
 
-        public Result<Medico> Inserir(Medico Medico)
+        public async Task<Result<Medico>> Inserir(Medico medico)
         {
-            Log.Logger.Debug("Tentando inserir Medico... {@c}", Medico);
+            Log.Logger.Debug("Tentando inserir medico... {@c}", medico);
 
-            Result resultado = Validar(Medico);
+            Result resultado = Validar(medico);
 
             if (resultado.IsFailed)
                 return Result.Fail(resultado.Errors);
 
             try
             {
-
-                repositorioMedico.Inserir(Medico);
+                repositorioMedico.Inserir(medico);
 
                 contextoPersistencia.GravarDados();
 
-                Log.Logger.Information("Medico {MedicoId} inserido com sucesso", Medico.Id);
+                Log.Logger.Information("medico {medicoId} inserido com sucesso", medico.Id);
 
-                return Result.Ok(Medico);
+                return Result.Ok(medico);
             }
             catch (Exception ex)
             {
                 contextoPersistencia.DesfazerAlteracoes();
 
-                string msgErro = "Falha no sistema ao tentar inserir o Medico";
+                string msgErro = "Falha no sistema ao tentar inserir o medico";
 
-                Log.Logger.Error(ex, msgErro + " {MedicoId} ", Medico.Id);
+                Log.Logger.Error(ex, msgErro + " {medicoId} ", medico.Id);
 
-                return Result.Fail(msgErro);
+                throw new Exception(msgErro, ex);
             }
         }
 
-        public Result<Medico> Editar(Medico Medico)
+        public async Task<Result<Medico>> Editar(Medico medico)
         {
-            Log.Logger.Debug("Tentando editar Medico... {@c}", Medico);
+            Log.Logger.Debug("Tentando editar medico... {@c}", medico);
 
-            var resultado = Validar(Medico);
+            var resultado = Validar(medico);
 
             if (resultado.IsFailed)
                 return Result.Fail(resultado.Errors);
 
             try
             {
-
-                repositorioMedico.Editar(Medico);
+                repositorioMedico.Editar(medico);
 
                 contextoPersistencia.GravarDados();
 
-                Log.Logger.Information("Medico {MedicoId} editado com sucesso", Medico.Id);
+                Log.Logger.Information("medico {medicoId} editado com sucesso", medico.Id);
             }
             catch (Exception ex)
             {
                 contextoPersistencia.DesfazerAlteracoes();
 
-                string msgErro = "Falha no sistema ao tentar editar o Medico";
+                string msgErro = "Falha no sistema ao tentar editar o medico";
 
-                Log.Logger.Error(ex, msgErro + " {MedicoId}", Medico.Id);
+                Log.Logger.Error(ex, msgErro + " {medicoId}", medico.Id);
 
-                return Result.Fail(msgErro);
+                throw new Exception(msgErro, ex);
             }
 
-            return Result.Ok(Medico);
+            return Result.Ok(medico);
         }
 
-        public Result Excluir(Medico Medico)
+        public async Task<Result> Excluir(Guid id)
         {
-            Log.Logger.Debug("Tentando excluir Medico... {@c}", Medico);
+            var medicoResult = await SelecionarPorId(id);
+
+            if (medicoResult.IsSuccess)
+                return Excluir(medicoResult.Value);
+
+            return Result.Fail(medicoResult.Errors);
+        }
+
+        public Result Excluir(Medico medico)
+        {
+            Log.Logger.Debug("Tentando excluir medico... {@c}", medico);
 
             try
             {
-                repositorioMedico.Excluir(Medico);
+                repositorioMedico.Excluir(medico);
 
                 contextoPersistencia.GravarDados();
 
-                Log.Logger.Information("Medico {MedicoId} editado com sucesso", Medico.Id);
+                Log.Logger.Information("medico {medicoId} editado com sucesso", medico.Id);
 
                 return Result.Ok();
             }
@@ -105,72 +113,62 @@ namespace eAgendaMedica.Aplicacao.ModuloMedico
             {
                 contextoPersistencia.DesfazerAlteracoes();
 
-                string msgErro = "Falha no sistema ao tentar excluir o Medico";
+                string msgErro = "Falha no sistema ao tentar excluir o medico";
 
-                Log.Logger.Error(ex, msgErro + " {MedicoId}", Medico.Id);
+                Log.Logger.Error(ex, msgErro + " {medicoId}", medico.Id);
 
-                return Result.Fail(msgErro);
+                throw new Exception(msgErro, ex);
             }
         }
 
-        public Result Excluir(Guid id)
+        public async Task<Result<List<Medico>>> SelecionarTodos()
         {
-            var MedicoResult = SelecionarPorId(id);
-
-            if (MedicoResult.IsSuccess)
-                return Excluir(MedicoResult.Value);
-
-            return Result.Fail(MedicoResult.Errors);
-        }
-
-        public Result<List<Medico>> SelecionarTodos(Guid usuarioId = new Guid())
-        {
-            Log.Logger.Debug("Tentando selecionar Medicos...");
+            Log.Logger.Debug("Tentando selecionar medicos...");
 
             try
             {
-                var Medicos = repositorioMedico.SelecionarTodos();
+                var medicos = repositorioMedico.SelecionarTodos();
 
-                Log.Logger.Information("Medicos selecionados com sucesso");
+                Log.Logger.Information("medicos selecionados com sucesso");
 
-                return Result.Ok(Medicos);
+                return Result.Ok(medicos);
             }
             catch (Exception ex)
             {
-                string msgErro = "Falha no sistema ao tentar selecionar todos os Medicos";
+                string msgErro = "Falha no sistema ao tentar selecionar todos os medicos";
 
                 Log.Logger.Error(ex, msgErro);
 
-                return Result.Fail(msgErro);
+                throw new Exception(msgErro, ex);
             }
         }
 
-        public Result<Medico> SelecionarPorId(Guid id)
+        public async Task<Result<Medico>> SelecionarPorId(Guid id)
         {
-            Log.Logger.Debug("Tentando selecionar Medico {MedicoId}...", id);
+            Log.Logger.Debug("Tentando selecionar medico {medicoId}...", id);
 
             try
             {
-                var Medico = repositorioMedico.SelecionarPorId(id);
+                var medico = repositorioMedico.SelecionarPorId(id);
 
-                if (Medico == null)
+                if (medico == null)
                 {
-                    Log.Logger.Warning("Medico {MedicoId} não encontrado", id);
+                    Log.Logger.Warning("medico {medicoId} não encontrado", id);
 
-                    return Result.Fail("Medico não encontrado");
+                    return Result.Fail("medico não encontrado");
                 }
 
-                Log.Logger.Information("Medico {MedicoId} selecionado com sucesso", id);
+                Log.Logger.Information("medico {medicoId} selecionado com sucesso", id);
 
-                return Result.Ok(Medico);
+                return Result.Ok(medico);
             }
             catch (Exception ex)
             {
-                string msgErro = "Falha no sistema ao tentar selecionar o Medico";
+                string msgErro = "Falha no sistema ao tentar selecionar o medico";
 
-                Log.Logger.Error(ex, msgErro + " {MedicoId}", id);
+                Log.Logger.Error(ex, msgErro + " {medicoId}", id);
 
-                return Result.Fail(msgErro);
+                throw new Exception(msgErro, ex);
             }
         }
 

@@ -17,10 +17,19 @@ namespace eAgendaMedica.Infra.Orm.ModuloAtividade
             builder.ToTable("TBAtividade");
 
             builder.Property(x => x.Id).ValueGeneratedNever();
-            builder.Property(x => x.DataRealizacao).HasColumnType("datetime").IsRequired();
-            builder.Property(x => x.HoraInicio).HasColumnType("varchar(200)").IsRequired();
-            builder.Property(x => x.HoraTermino).HasColumnType("varchar(200)").IsRequired();
+            builder.Property(x => x.DataRealizacao).IsRequired();
+            builder.Property(x => x.HoraInicio).HasColumnType("bigint").IsRequired();
+            builder.Property(x => x.HoraTermino).HasColumnType("bigint").IsRequired();
             builder.Property(x => x.Finalizada).HasColumnType("bit").IsRequired();
+
+            builder.Property(x => x.Assunto).HasColumnType("varchar(200)").IsRequired();
+            builder.Property(x => x.TempoDeDescanso).HasColumnType("bigint").IsRequired();
+
+            builder.HasMany(x => x.Medicos)
+                .WithMany(x => x.Atividades)
+                .UsingEntity(x =>
+                    x.ToTable("TBAtividade_TBMedico")
+                ); ;
         }
     }
 }

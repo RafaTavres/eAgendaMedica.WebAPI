@@ -7,19 +7,11 @@ using System.Threading.Tasks;
 
 namespace eAgendaMedica.Dominio.ModuloAtividade
 {
-    public class Consulta : ITipoAtividade
+    public class Consulta : TipoAtividade
     {
-        public string Assunto { get; set; }
-        public Medico Medico { get; set; }
-
-        public TimeSpan TempoDeDescanso { get; set; }
-
-        public Consulta(string a,Medico m)
+        public Consulta()
         {
-            Assunto = a;
-            Medico = m;
             TempoDeDescanso = new TimeSpan(2000);
-              
         }
     }
 }

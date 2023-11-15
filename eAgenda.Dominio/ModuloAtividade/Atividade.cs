@@ -1,5 +1,6 @@
 ﻿using eAgendaMedica.Dominio.Compartilhado;
 using eAgendaMedica.Dominio.ModuloAtividade;
+using eAgendaMedica.Dominio.ModuloMedico;
 using System;
 using System.Collections.Generic;
 
@@ -9,23 +10,38 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
     {
         public Atividade()
         {
+            Medicos = new List<Medico>();
         }
 
-        public Atividade(DateTime d, DateTime hi, DateTime ht, bool f,ITipoAtividade t)
+        public Atividade(DateTime d, DateTime hi, DateTime ht, bool f,TipoAtividade t,string a, List<Medico> mds)
         {
             DataRealizacao = d;
             HoraInicio = hi;
             HoraTermino = ht;
             Finalizada = f;
             TipoAtividade = t;
+            Assunto = a;
+            Medicos = new List<Medico>();
         }
 
         public DateTime DataRealizacao { get; set; }
         public DateTime HoraInicio { get; set; }
         public DateTime HoraTermino { get; set; }
         public bool Finalizada { get; set; }
-
-        public ITipoAtividade TipoAtividade { get; set; }
+        public List<Medico> Medicos { get; set; }
+        public string Assunto { get; set; }
+        private TipoAtividade TipoAtividade { get; set; }
+        public TimeSpan TempoDeDescanso 
+        {
+            get 
+            {
+                return TempoDeDescanso;
+            }
+            set
+            { 
+                 TempoDeDescanso = TipoAtividade.TempoDeDescanso;
+            }
+        }
 
         public override void Atualizar(Atividade registro)
         {
@@ -35,6 +51,8 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
             HoraTermino = registro.HoraTermino;
             Finalizada = registro.Finalizada;
             TipoAtividade = registro.TipoAtividade;
+            Assunto = registro.Assunto;
+            Medicos = registro.Medicos;
         }
 
         public Atividade Clonar()
@@ -50,17 +68,19 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
                   HoraInicio == atividade.HoraInicio &&
                   HoraTermino == atividade.HoraTermino &&
                   Finalizada == atividade.Finalizada &&
-                  TipoAtividade == atividade.TipoAtividade;
+                  TipoAtividade == atividade.TipoAtividade &&
+                  Assunto == atividade.Assunto &&
+                  Medicos == atividade.Medicos;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, DataRealizacao, HoraInicio, HoraTermino, Finalizada, TipoAtividade);
+            return HashCode.Combine(Id, DataRealizacao, HoraInicio, HoraTermino, Finalizada, TipoAtividade,Assunto,Medicos);
         }
 
         public override string? ToString()
         {
-            return " - " + TipoAtividade.Assunto + " - Data:  "+ DataRealizacao.ToString("d");
+            return " - " + Assunto + " - Data:  "+ DataRealizacao.ToString("d");
         }
     }
 }

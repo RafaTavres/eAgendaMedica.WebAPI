@@ -1,4 +1,5 @@
-using eAgendaMedica.WebApi.Config;
+using AutoMapper;
+using eAgenda.WebApi.Config.AutoMapperConfig;
 
 namespace eAgendaMedica.WebApi.Config.AutomapperConfig
 {
@@ -6,9 +7,9 @@ namespace eAgendaMedica.WebApi.Config.AutomapperConfig
     {
         public static void ConfigurarAutoMapper(this IServiceCollection services)
         {
-            services.AddAutoMapper(opt =>
+            services.AddAutoMapper(mapperConfig =>
             {
-                opt.AddProfile<MedicoProfile>();
+                mapperConfig.AddProfile<MedicoProfile>();
             });
         }
     }

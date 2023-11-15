@@ -2,14 +2,14 @@
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace eAgenda.Dominio.ModuloAtividade
+namespace eAgendaMedica.Dominio.ModuloAtividade
 {
 
     public class ValidadorAtividade : AbstractValidator<Atividade>
     {
         public ValidadorAtividade()
         {
-            RuleFor(x => x.TipoAtividade)
+            RuleFor(x => x.TempoDeDescanso)
                    .NotNull().NotEmpty();
 
 

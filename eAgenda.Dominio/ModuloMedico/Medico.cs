@@ -1,5 +1,6 @@
 ﻿using eAgendaMedica.Dominio.Compartilhado;
 using eAgendaMedica.Dominio.ModuloAtividade;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace eAgendaMedica.Dominio.ModuloMedico
         public Medico()
         {
             HorasOcupadas = new List<HoraOcupada>();
+            Atividades = new List<Atividade>();
         }
 
         public Medico(string c,string n, bool ea)
@@ -21,12 +23,14 @@ namespace eAgendaMedica.Dominio.ModuloMedico
             Nome = n;
             EmAtividade = ea;
             HorasOcupadas = new List<HoraOcupada>();
+            Atividades = new List<Atividade>();
         }
 
         public string CRM { get; set; }
         public string Nome { get; set; }
         public bool EmAtividade { get; set; }
-        private List<HoraOcupada> HorasOcupadas { get; set; }
+        public List<HoraOcupada> HorasOcupadas { get; set; }
+        public List<Atividade> Atividades { get; set; }
 
         public override void Atualizar(Medico registro)
         {
@@ -35,6 +39,7 @@ namespace eAgendaMedica.Dominio.ModuloMedico
             Nome = registro.Nome;
             EmAtividade= registro.EmAtividade;
             HorasOcupadas = registro.HorasOcupadas;
+            Atividades = registro.Atividades;
         }
 
         public Medico Clonar()
@@ -49,7 +54,8 @@ namespace eAgendaMedica.Dominio.ModuloMedico
                   CRM == medico.CRM &&
                   Nome == medico.Nome &&
                   EmAtividade == medico.EmAtividade &&
-                  HorasOcupadas == HorasOcupadas;
+                  HorasOcupadas == medico.HorasOcupadas &&
+                  Atividades == medico.Atividades;
 
         }
         public override string? ToString()
@@ -59,18 +65,20 @@ namespace eAgendaMedica.Dominio.ModuloMedico
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, CRM, Nome, EmAtividade);
+            return HashCode.Combine(Id, CRM, Nome, EmAtividade,HorasOcupadas,Atividades);
         }
 
         public void AdicionarHorario(DateTime diaDaAtiviadade,TimeSpan horarioInicio,TimeSpan horarioFinal)
         {
             HoraOcupada horas = new HoraOcupada(diaDaAtiviadade,horarioInicio,horarioFinal);
-            HorasOcupadas.Add(horas);
+            if(VerificarHorarioLivre(horas) == true)
+                HorasOcupadas.Add(horas);
         }
 
         public void AdicionarHorario(HoraOcupada horas)
         {
-            HorasOcupadas.Add(horas);
+            if (VerificarHorarioLivre(horas) == true)
+                HorasOcupadas.Add(horas);
         }
 
         public bool VerificarHorarioLivre(HoraOcupada horario)

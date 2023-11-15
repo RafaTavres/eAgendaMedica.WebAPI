@@ -1,5 +1,4 @@
-﻿using eAgenda.Dominio.ModuloAtividade;
-using eAgendaMedica.Dominio;
+﻿using eAgendaMedica.Dominio;
 using eAgendaMedica.Dominio.ModuloAtividade;
 using eAgendaMedica.Infra.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;

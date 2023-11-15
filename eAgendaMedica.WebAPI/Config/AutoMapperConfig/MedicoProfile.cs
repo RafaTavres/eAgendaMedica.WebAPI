@@ -1,11 +1,14 @@
 using AutoMapper;
+using eAgendaMedica.Dominio.ModuloMedico;
+using eAgendaMedica.WebAPI.ViewModels.ModuloMedico;
 
 namespace eAgenda.WebApi.Config.AutoMapperConfig
 {
-    public class CategoriaProfile : Profile
+    public class MedicoProfile : Profile
     {
-        public CategoriaProfile()
+        public MedicoProfile()
         {
+            CreateMap<Medico, ListarMedicoViewModel>();
         }
     }
 }

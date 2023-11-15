@@ -27,7 +27,7 @@ namespace eAgendaMedica.WebAPI.Controllers
         [ProducesResponseType(typeof(string[]), 500)]
         public async Task<IActionResult> SeleciontarTodos()
         {
-            var medicoResult = servicoMedico.SelecionarTodos();
+            var medicoResult = await servicoMedico.SelecionarTodos();
 
             var viewModel = mapeador.Map<List<ListarMedicoViewModel>>(medicoResult.Value);
 

@@ -1,8 +1,10 @@
 
+using eAgendaMedica.Aplicacao.ModuloAtividade;
 using eAgendaMedica.Aplicacao.ModuloMedico;
 using eAgendaMedica.Dominio;
 using eAgendaMedica.Dominio.ModuloAtividade;
 using eAgendaMedica.Infra.Orm;
+using eAgendaMedica.Infra.Orm.ModuloAtividade;
 using eAgendaMedica.Infra.Orm.ModuloMedico;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +22,11 @@ namespace eAgendaMedica.WebApi.Config
             });
 
             services.AddTransient<IRepositorioMedico, RepositorioMedicoOrm>();
+            services.AddTransient<ServicoMedico>();
+
+
+
+            services.AddTransient<IRepositorioAtividade, RepositorioAtividadeOrm>();
             services.AddTransient<ServicoAtividade>();
 
 

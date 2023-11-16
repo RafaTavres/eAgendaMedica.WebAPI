@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace eAgendaMedica.Aplicacao.ModuloMedico
 {
-    public class ServicoAtividade : ServicoBase<Medico, ValidadorMedico>
+    public class ServicoMedico : ServicoBase<Medico, ValidadorMedico>
     {
         private IRepositorioMedico repositorioMedico;
         private IContextoPersistencia contextoPersistencia;
 
-        public ServicoAtividade(IRepositorioMedico repositorioMedico,
+        public ServicoMedico(IRepositorioMedico repositorioMedico,
                              IContextoPersistencia contextoPersistencia)
         {
             this.repositorioMedico = repositorioMedico;

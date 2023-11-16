@@ -81,6 +81,11 @@ namespace eAgendaMedica.Dominio.ModuloMedico
                 HorasOcupadas.Add(horas);
         }
 
+        public void AdicionarAtividade(Atividade atividade)
+        {
+            Atividades.Add(atividade);    
+        }
+
         public bool VerificarHorarioLivre(HoraOcupada horario)
         {
             foreach (var h in HorasOcupadas)

@@ -13,7 +13,7 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
             Medicos = new List<Medico>();
         }
 
-        public Atividade(DateTime d, DateTime hi, DateTime ht, bool f,TipoAtividade t,string a, List<Medico> mds)
+        public Atividade(DateTime d, TimeSpan hi, TimeSpan ht, bool f,TipoAtividade t,string a, List<Medico> mds)
         {
             DataRealizacao = d;
             HoraInicio = hi;
@@ -24,12 +24,13 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
             Medicos = new List<Medico>();
         }
 
+        public string Assunto { get; set; }
         public DateTime DataRealizacao { get; set; }
-        public DateTime HoraInicio { get; set; }
-        public DateTime HoraTermino { get; set; }
+        public TimeSpan HoraInicio { get; set; }
+        public TimeSpan HoraTermino { get; set; }
         public bool Finalizada { get; set; }
         public List<Medico> Medicos { get; set; }
-        public string Assunto { get; set; }
+        
         private TipoAtividade TipoAtividade { get; set; }
         public TimeSpan TempoDeDescanso 
         {

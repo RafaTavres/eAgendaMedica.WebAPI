@@ -1,3 +1,4 @@
+using eAgendaMedica.Dominio.ModuloAtividade;
 using eAgendaMedica.Dominio.ModuloMedico;
 
 namespace eAgendaMedica.Dominio.Test.ModuloMedico
@@ -18,6 +19,24 @@ namespace eAgendaMedica.Dominio.Test.ModuloMedico
 
             //assert
             Assert.AreEqual(false, resultado);
+        }
+
+        [TestMethod]
+        public void Medico_Deve_inserir_uma_atividade()
+        {
+            //arrange
+            var t = new Medico();
+            Atividade atividade = new Atividade();
+            atividade.DataRealizacao = DateTime.UtcNow;
+            atividade.HoraInicio = new TimeSpan(1000);
+            atividade.HoraTermino = new TimeSpan(2000);
+            t.AdicionarAtividade(atividade);
+
+            //action
+            var resultado = t.Atividades.Count();
+
+            //assert
+            Assert.AreEqual(1, resultado);
         }
     }
 }

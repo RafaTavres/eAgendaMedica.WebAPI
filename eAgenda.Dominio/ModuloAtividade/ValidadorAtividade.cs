@@ -9,9 +9,6 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
     {
         public ValidadorAtividade()
         {
-            RuleFor(x => x.TempoDeDescanso)
-                   .NotNull().NotEmpty();
-
 
             RuleFor(x => x.DataRealizacao)
                    .NotNull().NotEmpty();

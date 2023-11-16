@@ -14,10 +14,10 @@ namespace eAgendaMedica.WebAPI.Controllers
     public class MedicoController : ApiControllerBase
     {
 
-        private readonly ServicoMedico servicoMedico;
+        private readonly ServicoAtividade servicoMedico;
         private readonly IMapper mapeador;
 
-        public MedicoController(ServicoMedico servicoMedico, IMapper mapeadorCategorias)
+        public MedicoController(ServicoAtividade servicoMedico, IMapper mapeadorCategorias)
         {
             this.servicoMedico = servicoMedico;
             this.mapeador = mapeadorCategorias;
@@ -35,6 +35,27 @@ namespace eAgendaMedica.WebAPI.Controllers
             var viewModel = mapeador.Map<List<ListarMedicoViewModel>>(medicoResult.Value);
 
             return Ok(viewModel);
+        }
+
+        [HttpGet("visualicao-completa/{id}")]
+
+        [ProducesResponseType(typeof(VisualizarMedicoViewModel), 200)]
+        [ProducesResponseType(typeof(string[]), 404)]
+        [ProducesResponseType(typeof(string[]), 500)]
+
+        public async Task<IActionResult> SelecionarPorId(Guid id)
+        {
+
+            var result = await servicoMedico.SelecionarPorId(id);
+
+            if (result.IsFailed)
+            {
+                return NotFound(result.Errors.Select(x => x.Message));
+            }
+
+            return Ok(mapeador.Map<VisualizarMedicoViewModel>(result.Value));
+
+
         }
 
 
@@ -77,13 +98,33 @@ namespace eAgendaMedica.WebAPI.Controllers
             return ProcessarResultado(medicoResult.ToResult(), medicoViewModel);
         }
 
+        [HttpDelete("{id}")]
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string[]), 400)]
+        [ProducesResponseType(typeof(string[]), 404)]
+        [ProducesResponseType(typeof(string[]), 500)]
+        public async Task<IActionResult> DeletarMedico(Guid id)
+        {
+            var result = await servicoMedico.SelecionarPorId(id);
+
+            if (result.IsFailed)
+                return NotFound(result.Errors.Select(x => x.Message));
+
+            return ProcessarResultado(servicoMedico.Excluir(result.Value));
+        }
+
+
+
+
+
         [HttpPut("adicionar-uma-atividade/{id}")]
 
         [ProducesResponseType(typeof(FormMedicoViewModel), 200)]
         [ProducesResponseType(typeof(string[]), 400)]
         [ProducesResponseType(typeof(string[]), 404)]
         [ProducesResponseType(typeof(string[]), 500)]
-        public async Task<IActionResult> AdicionarAtividadeAoMedico(Guid id,FormAtividadeViewModel formAtividade)
+        public async Task<IActionResult> AdicionarAtividadeAoMedico(Guid id,FormAtividadeViewModel atividadeViewModel)
         {
 
             var result = await servicoMedico.SelecionarPorId(id);
@@ -93,15 +134,15 @@ namespace eAgendaMedica.WebAPI.Controllers
                 return NotFound(result.Errors.Select(x => x.Message));
             }
 
-            var medicoAlterado =  result.Value;
+            var atividade = new Atividade()
+            {
+                Assunto = atividadeViewModel.Assunto,
+                DataRealizacao = atividadeViewModel.DataRealizacao,
+                HoraInicio = TimeSpan.Parse(atividadeViewModel.HoraInicio),
+                HoraTermino = TimeSpan.Parse(atividadeViewModel.HoraTermino)
+            };
 
-            var atividade = new Atividade();
-            atividade.DataRealizacao = formAtividade.DataRealizacao;
-            atividade.HoraInicio = TimeSpan.Parse(formAtividade.HoraInicio);
-            atividade.HoraTermino = TimeSpan.Parse(formAtividade.HoraTermino);
-            medicoAlterado.AdicionarAtividade(atividade);
-
-            var medicoResult = await servicoMedico.Editar(medicoAlterado);
+            var medicoResult = await servicoMedico.AdicionarAtividade(result.Value,atividade);
 
             return ProcessarResultado(medicoResult.ToResult());
         }

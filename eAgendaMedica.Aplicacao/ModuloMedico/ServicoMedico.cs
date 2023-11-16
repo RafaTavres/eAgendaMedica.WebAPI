@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace eAgendaMedica.Aplicacao.ModuloMedico
 {
-    public class ServicoMedico : ServicoBase<Medico, ValidadorMedico>
+    public class ServicoAtividade : ServicoBase<Medico, ValidadorMedico>
     {
         private IRepositorioMedico repositorioMedico;
         private IContextoPersistencia contextoPersistencia;
 
-        public ServicoMedico(IRepositorioMedico repositorioMedico,
+        public ServicoAtividade(IRepositorioMedico repositorioMedico,
                              IContextoPersistencia contextoPersistencia)
         {
             this.repositorioMedico = repositorioMedico;
@@ -172,5 +172,30 @@ namespace eAgendaMedica.Aplicacao.ModuloMedico
             }
         }
 
+        public async Task<Result<Medico>> AdicionarAtividade(Medico medico,Atividade atividade)
+        {
+            Log.Logger.Debug("Tentando adicionar atividade ao medico {MedicoId}...", medico.Id);
+
+            try
+            {
+                medico.AdicionarAtividade(atividade);
+
+                repositorioMedico.Editar(medico);
+
+                contextoPersistencia.GravarDados();
+
+                Log.Logger.Information("Medico {MedicoId} teve a atividade com sucesso", medico.Id);
+
+                return Result.Ok(medico);
+            }
+            catch (Exception exc)
+            {
+                string msgErro = "Falha no sistema ao tentar adicionar atividade ao Medico";
+
+                Log.Logger.Error(exc, msgErro + " {MedicoId}", medico.Id);
+
+                throw new Exception(msgErro, exc);
+            }
+        }
     }
 }

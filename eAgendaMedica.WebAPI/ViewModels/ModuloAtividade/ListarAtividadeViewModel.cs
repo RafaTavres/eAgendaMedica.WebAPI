@@ -1,15 +1,13 @@
 ﻿using eAgendaMedica.Dominio.ModuloAtividade;
-using eAgendaMedica.Dominio.ModuloMedico;
-using eAgendaMedica.WebAPI.ViewModels.ModuloMedico;
 
 namespace eAgendaMedica.WebAPI.ViewModels.ModuloAtividade
 {
-    public class FormAtividadeViewModel
+    public class ListarAtividadeViewModel
     {
         public string Assunto { get; set; }
         public DateTime DataRealizacao { get; set; }
         public string HoraInicio { get; set; }
         public string HoraTermino { get; set; }
-
+        public string TempoDeDescanso { get; set; }
     }
 }

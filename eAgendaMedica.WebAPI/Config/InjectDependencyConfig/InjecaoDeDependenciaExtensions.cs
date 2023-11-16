@@ -20,7 +20,7 @@ namespace eAgendaMedica.WebApi.Config
             });
 
             services.AddTransient<IRepositorioMedico, RepositorioMedicoOrm>();
-            services.AddTransient<ServicoMedico>();
+            services.AddTransient<ServicoAtividade>();
 
 
         }

@@ -13,7 +13,7 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
             Medicos = new List<Medico>();
         }
 
-        public Atividade(DateTime d, TimeSpan hi, TimeSpan ht, bool f,TipoAtividade t,string a, List<Medico> mds)
+        public Atividade(DateTime d, TimeSpan hi, TimeSpan ht, bool f,TipoAtividade t,string a)
         {
             DataRealizacao = d;
             HoraInicio = hi;
@@ -22,6 +22,7 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
             TipoAtividade = t;
             Assunto = a;
             Medicos = new List<Medico>();
+            TempoDeDescanso = t.TempoDeDescanso;
         }
 
         public string Assunto { get; set; }
@@ -29,20 +30,9 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
         public TimeSpan HoraInicio { get; set; }
         public TimeSpan HoraTermino { get; set; }
         public bool Finalizada { get; set; }
-        public List<Medico> Medicos { get; set; }
-        
+        public List<Medico> Medicos { get; set; }  
         private TipoAtividade TipoAtividade { get; set; }
-        public TimeSpan TempoDeDescanso 
-        {
-            get 
-            {
-                return TempoDeDescanso;
-            }
-            set
-            { 
-                 TempoDeDescanso = TipoAtividade.TempoDeDescanso;
-            }
-        }
+        public TimeSpan TempoDeDescanso { get; set; }
 
         public override void Atualizar(Atividade registro)
         {

@@ -21,7 +21,7 @@ namespace eAgendaMedica.Infra.Orm.ModuloMedico
         public override Medico SelecionarPorId(Guid id)
         {
             return registros
-                .Include(x => x.HorasOcupadas)
+                .Include(x => x.Atividades)
                 .SingleOrDefault(x => x.Id == id);
         }
     }

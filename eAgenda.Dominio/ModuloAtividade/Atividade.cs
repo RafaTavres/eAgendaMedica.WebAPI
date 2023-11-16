@@ -31,7 +31,7 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
         public TimeSpan HoraTermino { get; set; }
         public bool Finalizada { get; set; }
         public List<Medico> Medicos { get; set; }  
-        private TipoAtividade TipoAtividade { get; set; }
+        public TipoAtividade TipoAtividade { get; set; }
         public TimeSpan TempoDeDescanso { get; set; }
 
         public override void Atualizar(Atividade registro)

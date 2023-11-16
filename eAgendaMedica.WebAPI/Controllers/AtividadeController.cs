@@ -36,5 +36,27 @@ namespace eAgendaMedica.WebAPI.Controllers
 
             return Ok(viewModel);
         }
+
+
+        [HttpGet("visualicao-completa/{id}")]
+
+        [ProducesResponseType(typeof(VisualizarAtividadeViewModel), 200)]
+        [ProducesResponseType(typeof(string[]), 404)]
+        [ProducesResponseType(typeof(string[]), 500)]
+
+        public async Task<IActionResult> SelecionarPorId(Guid id)
+        {
+
+            var result = await servicoAtividade.SelecionarPorId(id);
+
+            if (result.IsFailed)
+            {
+                return NotFound(result.Errors.Select(x => x.Message));
+            }
+
+            return Ok(mapeador.Map<VisualizarAtividadeViewModel>(result.Value));
+
+
+        }
     }
 }

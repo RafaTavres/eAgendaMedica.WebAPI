@@ -142,6 +142,15 @@ namespace eAgendaMedica.WebAPI.Controllers
                     HoraTermino = TimeSpan.Parse(atividadeViewModel.HoraTermino)
                 };
 
+                if(atividadeViewModel.TipoAtividade == TipoAtividadeEnum.Cirurgia)
+                {
+                    atividade.TipoAtividade = new Cirurgias();
+                }
+                if (atividadeViewModel.TipoAtividade == TipoAtividadeEnum.Consulta)
+                {
+                    atividade.TipoAtividade = new Consulta();
+                }
+
                 var medicoResult = await servicoMedico.AdicionarAtividade(result.Value, atividade);
 
                 return ProcessarResultado(medicoResult.ToResult());

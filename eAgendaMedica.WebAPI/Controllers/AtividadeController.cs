@@ -3,6 +3,8 @@ using eAgenda.WebApi.Controllers.Shared;
 using eAgendaMedica.Aplicacao.ModuloAtividade;
 using eAgendaMedica.Aplicacao.ModuloAtividade;
 using eAgendaMedica.Aplicacao.ModuloMedico;
+using eAgendaMedica.Dominio.ModuloAtividade;
+using eAgendaMedica.Dominio.ModuloMedico;
 using eAgendaMedica.WebAPI.ViewModels.ModuloAtividade;
 using eAgendaMedica.WebAPI.ViewModels.ModuloMedico;
 using Microsoft.AspNetCore.Mvc;
@@ -58,5 +60,28 @@ namespace eAgendaMedica.WebAPI.Controllers
 
 
         }
+
+
+
+
+
+
+        [HttpPost]
+
+        [ProducesResponseType(typeof(InserirAtividadeViewModel), 201)]
+        [ProducesResponseType(typeof(string[]), 400)]
+        [ProducesResponseType(typeof(string[]), 500)]
+        public async Task<IActionResult> InserirAtividade(InserirAtividadeViewModel inserirViewModel)
+        {
+
+            var atividade = mapeador.Map<Atividade>(inserirViewModel);
+
+            var result = await servicoAtividade.Inserir(atividade);
+
+            return ProcessarResultado(result.ToResult(), inserirViewModel);
+        }
+
+
+
     }
 }

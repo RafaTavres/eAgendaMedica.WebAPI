@@ -10,7 +10,7 @@ using eAgendaMedica.Dominio.ModuloAtividade;
 
 namespace eAgendaMedica.Infra.Orm.ModuloAtividade
 {
-    public class MapeadorAividade : IEntityTypeConfiguration<Atividade>
+    public class MapeadorAtividade : IEntityTypeConfiguration<Atividade>
     {
         public void Configure(EntityTypeBuilder<Atividade> builder)
         {
@@ -21,6 +21,7 @@ namespace eAgendaMedica.Infra.Orm.ModuloAtividade
             builder.Property(x => x.HoraInicio).HasColumnType("bigint").IsRequired();
             builder.Property(x => x.HoraTermino).HasColumnType("bigint").IsRequired();
             builder.Property(x => x.Finalizada).HasColumnType("bit").IsRequired();
+            builder.Property(x => x.TipoAtividadeEnum).HasConversion<int>().IsRequired();
 
             builder.Property(x => x.Assunto).HasColumnType("varchar(200)").IsRequired();
             builder.Property(x => x.TempoDeDescanso).HasColumnType("bigint").IsRequired();

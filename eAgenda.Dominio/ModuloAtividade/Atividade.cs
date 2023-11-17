@@ -11,6 +11,7 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
         public Atividade()
         {
             Medicos = new List<Medico>();
+            AtribuirAtividade();
         }
 
         public Atividade(DateTime d, TimeSpan hi, TimeSpan ht, bool f,TipoAtividade t,string a)
@@ -23,6 +24,7 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
             Assunto = a;
             Medicos = new List<Medico>();
             TempoDeDescanso = t.TempoDeDescanso;
+            AtribuirAtividade();
         }
 
         public string Assunto { get; set; }
@@ -31,7 +33,8 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
         public TimeSpan HoraTermino { get; set; }
         public bool Finalizada { get; set; }
         public List<Medico> Medicos { get; set; }  
-        public TipoAtividade TipoAtividade { get; set; }
+        private TipoAtividade TipoAtividade { get; set; }
+        public TipoAtividadeEnum TipoAtividadeEnum { get; set; }
         public TimeSpan TempoDeDescanso { get; set; }
 
         public override void Atualizar(Atividade registro)
@@ -41,15 +44,29 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
             HoraInicio = registro.HoraInicio;
             HoraTermino = registro.HoraTermino;
             Finalizada = registro.Finalizada;
-            TipoAtividade = registro.TipoAtividade;
+            TipoAtividadeEnum = registro.TipoAtividadeEnum;
             Assunto = registro.Assunto;
             Medicos = registro.Medicos;
+        }
+
+        public void AdicionarMedico(Medico medico)
+        {
+            Medicos.Add(medico);
         }
 
         public Atividade Clonar()
         {
             return MemberwiseClone() as Atividade;
         }
+
+        public void AtribuirAtividade()
+        {
+            if(TipoAtividadeEnum == TipoAtividadeEnum.Cirurgia)
+                TipoAtividade = new Cirurgias();
+            else
+                TipoAtividade = new Consulta();
+        }
+
 
         public override bool Equals(object? obj)
         {
@@ -59,14 +76,14 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
                   HoraInicio == atividade.HoraInicio &&
                   HoraTermino == atividade.HoraTermino &&
                   Finalizada == atividade.Finalizada &&
-                  TipoAtividade == atividade.TipoAtividade &&
+                  TipoAtividadeEnum == atividade.TipoAtividadeEnum &&
                   Assunto == atividade.Assunto &&
                   Medicos == atividade.Medicos;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, DataRealizacao, HoraInicio, HoraTermino, Finalizada, TipoAtividade,Assunto,Medicos);
+            return HashCode.Combine(Id, DataRealizacao, HoraInicio, HoraTermino, Finalizada, TipoAtividadeEnum, Assunto,Medicos);
         }
 
         public override string? ToString()

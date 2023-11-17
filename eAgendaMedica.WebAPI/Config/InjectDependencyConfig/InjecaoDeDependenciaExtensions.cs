@@ -6,6 +6,7 @@ using eAgendaMedica.Dominio.ModuloAtividade;
 using eAgendaMedica.Infra.Orm;
 using eAgendaMedica.Infra.Orm.ModuloAtividade;
 using eAgendaMedica.Infra.Orm.ModuloMedico;
+using eAgendaMedica.WebAPI.Config.AutoMapperConfig;
 using Microsoft.EntityFrameworkCore;
 
 namespace eAgendaMedica.WebApi.Config
@@ -28,6 +29,8 @@ namespace eAgendaMedica.WebApi.Config
 
             services.AddTransient<IRepositorioAtividade, RepositorioAtividadeOrm>();
             services.AddTransient<ServicoAtividade>();
+
+            services.AddTransient<InserirAtividadeMappingAction>();
 
 
         }

@@ -24,5 +24,9 @@ namespace eAgendaMedica.Infra.Orm.ModuloMedico
                 .Include(x => x.Atividades)
                 .SingleOrDefault(x => x.Id == id);
         }
+        public List<Medico> SelecionarMuitos(List<Guid> idsSelecionadas)
+        {
+            return registros.Where(medico => idsSelecionadas.Contains(medico.Id)).ToList();
+        }
     }
 }

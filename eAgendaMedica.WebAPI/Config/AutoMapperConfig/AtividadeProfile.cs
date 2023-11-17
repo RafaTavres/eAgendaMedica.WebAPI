@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using eAgendaMedica.Dominio.ModuloAtividade;
 using eAgendaMedica.WebAPI.ViewModels.ModuloAtividade;
+using eAgendaMedica.WebAPI.ViewModels.ModuloMedico;
 
 namespace eAgendaMedica.WebAPI.Config.AutoMapperConfig
 {
@@ -10,7 +11,26 @@ namespace eAgendaMedica.WebAPI.Config.AutoMapperConfig
         {
             CreateMap<Atividade, ListarAtividadeViewModel>();
 
+            CreateMap<Atividade, VisualizarAtividadeViewModel>();
+
             CreateMap<FormAtividadeViewModel,Atividade>();
+
+            CreateMap<InserirAtividadeViewModel, Atividade>()
+                .ForMember(destino => destino.Medicos, opt => opt.Ignore())
+                .AfterMap<InserirAtividadeMappingAction>();
+        }
+    }
+
+    public class InserirAtividadeMappingAction : IMappingAction<InserirAtividadeViewModel, Atividade>
+    {
+        private readonly IRepositorioMedico repositorioMedico;
+        public InserirAtividadeMappingAction(IRepositorioMedico repositorioMedico)
+        {
+            this.repositorioMedico = repositorioMedico;
+        }
+        public void Process(InserirAtividadeViewModel source, Atividade destination, ResolutionContext context)
+        {
+            destination.Medicos = repositorioMedico.SelecionarMuitos(source.IdsMedicos);
         }
     }
 }

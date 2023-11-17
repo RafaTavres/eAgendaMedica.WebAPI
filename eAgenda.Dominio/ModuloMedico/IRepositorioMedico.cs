@@ -9,6 +9,6 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
 {
     public interface IRepositorioMedico : IRepositorio<Medico>
     {
-    
+        List<Medico> SelecionarMuitos(List<Guid> idsSelecionadas);
     }
 }

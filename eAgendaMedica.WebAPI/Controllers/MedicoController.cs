@@ -139,17 +139,13 @@ namespace eAgendaMedica.WebAPI.Controllers
                     Assunto = atividadeViewModel.Assunto,
                     DataRealizacao = atividadeViewModel.DataRealizacao,
                     HoraInicio = TimeSpan.Parse(atividadeViewModel.HoraInicio),
-                    HoraTermino = TimeSpan.Parse(atividadeViewModel.HoraTermino)
+                    HoraTermino = TimeSpan.Parse(atividadeViewModel.HoraTermino),
+                    TipoAtividadeEnum = atividadeViewModel.TipoAtividade,
+                    
+                    
                 };
 
-                if(atividadeViewModel.TipoAtividade == TipoAtividadeEnum.Cirurgia)
-                {
-                    atividade.TipoAtividade = new Cirurgias();
-                }
-                if (atividadeViewModel.TipoAtividade == TipoAtividadeEnum.Consulta)
-                {
-                    atividade.TipoAtividade = new Consulta();
-                }
+                atividade.AtribuirAtividade();
 
                 var medicoResult = await servicoMedico.AdicionarAtividade(result.Value, atividade);
 

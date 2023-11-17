@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAgendaMedica.Infra.Orm", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAgenda.Dominio.Test", "TestProject1\eAgenda.Dominio.Test.csproj", "{D424D090-586E-4BC3-80B9-5008138E70D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eAgendaMedica.Infra.Orm.Test", "eAgendaMedica.Infra.Orm.Test\eAgendaMedica.Infra.Orm.Test.csproj", "{2EB9346B-36D8-4FA4-9742-D6028F627359}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{D424D090-586E-4BC3-80B9-5008138E70D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D424D090-586E-4BC3-80B9-5008138E70D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D424D090-586E-4BC3-80B9-5008138E70D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EB9346B-36D8-4FA4-9742-D6028F627359}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EB9346B-36D8-4FA4-9742-D6028F627359}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EB9346B-36D8-4FA4-9742-D6028F627359}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EB9346B-36D8-4FA4-9742-D6028F627359}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +77,7 @@ Global
 		{BE39549C-6D4C-4B5D-A764-E77F4B026207} = {3E77A340-5067-4808-94A1-5C27B2E6512E}
 		{1E11839F-3888-42AA-8D6C-350B06A7F03A} = {8BB3124F-DF74-4C2A-A01B-2392F4503AAF}
 		{D424D090-586E-4BC3-80B9-5008138E70D3} = {53A903F0-9D92-42A3-AA64-D8EC41F62B42}
+		{2EB9346B-36D8-4FA4-9742-D6028F627359} = {02DB47C0-D02D-48AE-B1FE-2A96247727A3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9CEDE9A1-7843-4262-B4BE-A118428C71E7}

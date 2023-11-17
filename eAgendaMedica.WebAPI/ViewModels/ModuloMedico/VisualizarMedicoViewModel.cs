@@ -9,11 +9,13 @@ namespace eAgendaMedica.WebAPI.ViewModels.ModuloMedico
         public VisualizarMedicoViewModel()
         {
             Atividades = new List<ListarAtividadeViewModel>();
+            HorasOcupadas = new List<HorasOcupadasViewModel>();
         }
         public Guid Id { get; set; }
         public string CRM { get; set; }
         public string Nome { get; set; }
         public bool EmAtividade { get; set; }
         public List<ListarAtividadeViewModel> Atividades { get; set; }
+        public List<HorasOcupadasViewModel> HorasOcupadas { get; set; }
     }
 }

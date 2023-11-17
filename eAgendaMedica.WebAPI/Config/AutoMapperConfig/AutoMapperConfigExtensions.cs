@@ -13,6 +13,8 @@ namespace eAgendaMedica.WebApi.Config.AutomapperConfig
                 mapperConfig.AddProfile<MedicoProfile>();
 
                 mapperConfig.AddProfile<AtividadeProfile>();
+
+                mapperConfig.AddProfile<HorasOcupadasProfile>();
             });
         }
     }

@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eAgenda.WebApi.Filters;
 
 namespace eAgendaMedica.WebApi.Config

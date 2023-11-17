@@ -62,10 +62,6 @@ namespace eAgendaMedica.WebAPI.Controllers
         }
 
 
-
-
-
-
         [HttpPost]
 
         [ProducesResponseType(typeof(InserirAtividadeViewModel), 201)]
@@ -82,6 +78,48 @@ namespace eAgendaMedica.WebAPI.Controllers
         }
 
 
+        [HttpPut("{id}")]
+
+        [ProducesResponseType(typeof(InserirAtividadeViewModel), 200)]
+        [ProducesResponseType(typeof(string[]), 400)]
+        [ProducesResponseType(typeof(string[]), 404)]
+        [ProducesResponseType(typeof(string[]), 500)]
+        public async Task<IActionResult> EditarMedico(Guid id, InserirAtividadeViewModel atividadeViewModel)
+        {
+
+            var result = await servicoAtividade.SelecionarPorId(id);
+
+            if (result.IsFailed)
+            {
+                return NotFound(result.Errors.Select(x => x.Message));
+            }
+
+
+            var medicoAlterado = mapeador.Map(atividadeViewModel, result.Value);
+
+            var medicoResult = await servicoAtividade.Editar(medicoAlterado);
+
+            return ProcessarResultado(medicoResult.ToResult(), atividadeViewModel);
+        }
+
+
+
+
+        [HttpDelete("{id}")]
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string[]), 400)]
+        [ProducesResponseType(typeof(string[]), 404)]
+        [ProducesResponseType(typeof(string[]), 500)]
+        public async Task<IActionResult> DeletarAtividade(Guid id)
+        {
+            var result = await servicoAtividade.SelecionarPorId(id);
+
+            if (result.IsFailed)
+                return NotFound(result.Errors.Select(x => x.Message));
+
+            return ProcessarResultado(servicoAtividade.Excluir(result.Value));
+        }
 
     }
 }

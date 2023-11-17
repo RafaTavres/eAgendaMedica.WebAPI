@@ -22,6 +22,7 @@ namespace eAgendaMedica.Infra.Orm.ModuloMedico
         {
             return registros
                 .Include(x => x.Atividades)
+                .Include(x => x.HorasOcupadas)
                 .SingleOrDefault(x => x.Id == id);
         }
         public List<Medico> SelecionarMuitos(List<Guid> idsSelecionadas)

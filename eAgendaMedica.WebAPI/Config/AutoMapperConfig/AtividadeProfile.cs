@@ -13,11 +13,12 @@ namespace eAgendaMedica.WebAPI.Config.AutoMapperConfig
 
             CreateMap<Atividade, VisualizarAtividadeViewModel>();
 
-            CreateMap<FormAtividadeViewModel,Atividade>();
+            CreateMap<FormAtividadeViewModel, Atividade>();
 
             CreateMap<InserirAtividadeViewModel, Atividade>()
                 .ForMember(destino => destino.Medicos, opt => opt.Ignore())
                 .AfterMap<InserirAtividadeMappingAction>();
+
         }
     }
 

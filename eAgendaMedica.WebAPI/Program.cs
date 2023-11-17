@@ -26,7 +26,7 @@ namespace eAgendaMedica.WebAPI
 
 
             Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Information()
+              .MinimumLevel.Information()
               .WriteTo.Console()
               .CreateLogger();
 

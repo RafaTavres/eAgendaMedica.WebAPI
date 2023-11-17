@@ -140,10 +140,10 @@ namespace eAgendaMedica.WebAPI.Controllers
                     DataRealizacao = atividadeViewModel.DataRealizacao,
                     HoraInicio = TimeSpan.Parse(atividadeViewModel.HoraInicio),
                     HoraTermino = TimeSpan.Parse(atividadeViewModel.HoraTermino),
-                    TipoAtividadeEnum = atividadeViewModel.TipoAtividade,
-                    
-                    
+                    TipoAtividadeEnum = atividadeViewModel.TipoAtividade,     
                 };
+
+                result.Value.AdicionarHorario(atividadeViewModel.DataRealizacao, TimeSpan.Parse(atividadeViewModel.HoraInicio) ,TimeSpan.Parse(atividadeViewModel.HoraTermino));
 
                 atividade.AtribuirAtividade();
 

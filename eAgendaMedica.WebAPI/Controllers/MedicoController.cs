@@ -37,6 +37,20 @@ namespace eAgendaMedica.WebAPI.Controllers
                 return Ok(viewModel);
             }
 
+            [HttpGet("selecionar-top-10-medicos")]
+
+            [ProducesResponseType(typeof(List<ListarMedicoViewModel>), 200)]
+            [ProducesResponseType(typeof(string[]), 404)]
+            [ProducesResponseType(typeof(string[]), 500)]
+            public async Task<IActionResult> SelecionarTop10Medicos(DateTime dataInicial,DateTime dataFinal)
+            {
+                var medicoResult = await servicoMedico.SelecionarTop10Medicos(dataInicial,dataFinal);
+
+                var viewModel = mapeador.Map<List<ListarMedicoViewModel>>(medicoResult.Value);
+
+                return Ok(viewModel);
+            }
+
             [HttpGet("visualicao-completa/{id}")]
 
             [ProducesResponseType(typeof(VisualizarMedicoViewModel), 200)]

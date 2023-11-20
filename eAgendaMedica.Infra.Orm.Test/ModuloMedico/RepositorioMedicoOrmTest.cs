@@ -123,6 +123,23 @@ namespace eAgendaMedica.Infra.Orm.Test.ModuloMedico
             //arrange
             var repositorio = new RepositorioMedicoOrm(db);
 
+            AdicionarMedicosComHorario(repositorio);
+
+            db.SaveChanges();
+
+            //action
+            var medicos = repositorio.SelecionarTop10MedicosMaisTrabalhadores(DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
+
+            //assert
+            Assert.AreEqual(10, medicos.Count);
+
+            Assert.AreEqual("Medico_3", medicos[0].Nome);
+            Assert.AreEqual("Medico_2", medicos[1].Nome);
+            Assert.AreEqual("Medico_1", medicos[2].Nome);
+        }
+
+        private void AdicionarMedicosComHorario(RepositorioMedicoOrm repositorio)
+        {
             Medico m1 = new Medico() { Nome = "Medico_1", CRM = "12345-SP", EmAtividade = false };
             m1.AdicionarHorario(new HoraOcupada(DateTime.UtcNow.AddMinutes(10), new TimeSpan(2000), new TimeSpan(4000)));
             repositorio.Inserir(m1);
@@ -137,17 +154,14 @@ namespace eAgendaMedica.Infra.Orm.Test.ModuloMedico
             m3.AdicionarHorario(new HoraOcupada(DateTime.UtcNow.AddMinutes(2), new TimeSpan(2000), new TimeSpan(4000)));
             m3.AdicionarHorario(new HoraOcupada(DateTime.UtcNow.AddMinutes(2), new TimeSpan(2000), new TimeSpan(4000)));
             repositorio.Inserir(m3);
-            db.SaveChanges();
 
-            //action
-            var medicos = repositorio.SelecionarTop10MedicosMaisTrabalhadores(DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
+            for (int i = 4; i < 12; i++)
+            {
+                Medico mi = new Medico() { Nome = $"Medico{i}", CRM = "12345-SP", EmAtividade = false };
+                mi.AdicionarHorario(new HoraOcupada(DateTime.UtcNow.AddMinutes(i), new TimeSpan(i+ 000), new TimeSpan(i+ 000)));
+                repositorio.Inserir(mi);
+            }
 
-            //assert
-            Assert.AreEqual(3, medicos.Count);
-
-            Assert.AreEqual("Medico_3", medicos[0].Nome);
-            Assert.AreEqual("Medico_2", medicos[1].Nome);
-            Assert.AreEqual("Medico_1", medicos[2].Nome);
         }
     }
 }

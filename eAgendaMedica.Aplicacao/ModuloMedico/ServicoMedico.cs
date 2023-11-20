@@ -197,5 +197,27 @@ namespace eAgendaMedica.Aplicacao.ModuloMedico
                 throw new Exception(msgErro, exc);
             }
         }
+
+        public async Task<Result<List<Medico>>> SelecionarTop10Medicos(DateTime dataInicial, DateTime dataFinal)
+        {
+            Log.Logger.Debug("Tentando selecionar top 10 medicos...");
+
+            try
+            {
+                var medicos = repositorioMedico.SelecionarTop10MedicosMaisTrabalhadores(dataInicial,dataFinal);
+
+                Log.Logger.Information("medicos selecionados com sucesso");
+
+                return Result.Ok(medicos);
+            }
+            catch (Exception ex)
+            {
+                string msgErro = "Falha no sistema ao tentar selecionar todos os medicos";
+
+                Log.Logger.Error(ex, msgErro);
+
+                throw new Exception(msgErro, ex);
+            }
+        }
     }
 }

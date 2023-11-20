@@ -35,7 +35,7 @@ namespace eAgendaMedica.Infra.Orm.ModuloMedico
             return registros
                 .Include(x => x.HorasOcupadas)
                 .AsEnumerable()
-                .OrderByDescending(x => x.CalcularHorasOcupadas(dataInicio, dataTermino)).ToList();
+                .OrderByDescending(x => x.CalcularHorasOcupadas(dataInicio, dataTermino)).Take(10).ToList();
         }
     }
 }

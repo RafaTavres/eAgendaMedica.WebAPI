@@ -91,7 +91,7 @@ namespace eAgendaMedica.Infra.Orm.Test.ModuloMedico
 
 
         [TestMethod]
-        public void Deve_selecionar_todas_tarefas()
+        public void Deve_selecionar_todos_os_medicos()
         {
             //arrange
             var repositorio = new RepositorioMedicoOrm(db);
@@ -107,14 +107,47 @@ namespace eAgendaMedica.Infra.Orm.Test.ModuloMedico
             db.SaveChanges();
 
             //action
-            var tarefas = repositorio.SelecionarTodos();
+            var medicos = repositorio.SelecionarTodos();
 
             //assert
-            Assert.AreEqual(3, tarefas.Count);
+            Assert.AreEqual(3, medicos.Count);
 
-            Assert.AreEqual("Medico_1", tarefas[0].Nome);
-            Assert.AreEqual("Medico_2", tarefas[1].Nome);
-            Assert.AreEqual("Medico_3", tarefas[2].Nome);
+            Assert.AreEqual("Medico_1", medicos[0].Nome);
+            Assert.AreEqual("Medico_2", medicos[1].Nome);
+            Assert.AreEqual("Medico_3", medicos[2].Nome);
+        }
+
+        [TestMethod]
+        public void Deve_selecionar_o_top_10_medicos_que_mais_trabalharam()
+        {
+            //arrange
+            var repositorio = new RepositorioMedicoOrm(db);
+
+            Medico m1 = new Medico() { Nome = "Medico_1", CRM = "12345-SP", EmAtividade = false };
+            m1.AdicionarHorario(new HoraOcupada(DateTime.UtcNow.AddMinutes(10), new TimeSpan(2000), new TimeSpan(4000)));
+            repositorio.Inserir(m1);
+
+            Medico m2 = new Medico() { Nome = "Medico_2", CRM = "12345-SP", EmAtividade = false };
+            m2.AdicionarHorario(new HoraOcupada(DateTime.UtcNow.AddMinutes(10), new TimeSpan(2000), new TimeSpan(4000)));
+            m2.AdicionarHorario(new HoraOcupada(DateTime.UtcNow.AddMinutes(10), new TimeSpan(2000), new TimeSpan(4000)));
+            repositorio.Inserir(m2);
+
+            Medico m3 = new Medico() { Nome = "Medico_3", CRM = "12345-SP", EmAtividade = false };
+            m3.AdicionarHorario(new HoraOcupada(DateTime.UtcNow.AddMinutes(2), new TimeSpan(2000), new TimeSpan(4000)));
+            m3.AdicionarHorario(new HoraOcupada(DateTime.UtcNow.AddMinutes(2), new TimeSpan(2000), new TimeSpan(4000)));
+            m3.AdicionarHorario(new HoraOcupada(DateTime.UtcNow.AddMinutes(2), new TimeSpan(2000), new TimeSpan(4000)));
+            repositorio.Inserir(m3);
+            db.SaveChanges();
+
+            //action
+            var medicos = repositorio.SelecionarTop10MedicosMaisTrabalhadores(DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
+
+            //assert
+            Assert.AreEqual(3, medicos.Count);
+
+            Assert.AreEqual("Medico_3", medicos[0].Nome);
+            Assert.AreEqual("Medico_2", medicos[1].Nome);
+            Assert.AreEqual("Medico_1", medicos[2].Nome);
         }
     }
 }

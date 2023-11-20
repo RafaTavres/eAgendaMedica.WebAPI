@@ -85,6 +85,21 @@ namespace eAgendaMedica.Dominio.ModuloMedico
         {
             Atividades.Add(atividade);    
         }
+        public TimeSpan CalcularHorasOcupadas(DateTime dataInicial,DateTime dataFinal)
+        {
+            var horas_trabalhadas = new TimeSpan();
+
+             foreach (var horario in HorasOcupadas)
+             {
+                if (horario.DiaDaAtividade >= dataInicial && horario.DiaDaAtividade <= dataFinal)
+                {
+                    var horas = horario.HoraFinal - horario.HoraInicio;
+                    horas_trabalhadas += horas;
+                }
+             }
+
+            return horas_trabalhadas;
+        }
 
         public bool VerificarHorarioLivre(HoraOcupada horario)
         {

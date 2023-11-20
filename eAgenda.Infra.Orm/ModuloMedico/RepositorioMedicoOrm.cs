@@ -29,5 +29,13 @@ namespace eAgendaMedica.Infra.Orm.ModuloMedico
         {
             return registros.Where(medico => idsSelecionadas.Contains(medico.Id)).ToList();
         }
+
+        public List<Medico> SelecionarTop10MedicosMaisTrabalhadores(DateTime dataInicio, DateTime dataTermino)
+        {
+            return registros
+                .Include(x => x.HorasOcupadas)
+                .AsEnumerable()
+                .OrderByDescending(x => x.CalcularHorasOcupadas(dataInicio, dataTermino)).ToList();
+        }
     }
 }

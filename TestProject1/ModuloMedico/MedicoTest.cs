@@ -38,5 +38,20 @@ namespace eAgendaMedica.Dominio.Test.ModuloMedico
             //assert
             Assert.AreEqual(1, resultado);
         }
+
+        [TestMethod]
+        public void Medico_calcular_suas_horas_de_trabalho()
+        {
+            //arrange
+            var t = new Medico();
+            t.AdicionarHorario(DateTime.UtcNow.AddMinutes(10), new TimeSpan(1000), new TimeSpan(2000));
+            t.AdicionarHorario(DateTime.UtcNow.AddDays(3), new TimeSpan(1000), new TimeSpan(2000));
+            
+            //action
+            var resultado = t.CalcularHorasOcupadas(DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
+
+            //assert
+            Assert.AreEqual(new TimeSpan(1000), resultado);
+        }
     }
 }

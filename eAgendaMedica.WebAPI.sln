@@ -29,9 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAgendaMedica.Dominio", "eA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAgendaMedica.Infra.Orm", "eAgenda.Infra.Orm\eAgendaMedica.Infra.Orm.csproj", "{1E11839F-3888-42AA-8D6C-350B06A7F03A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAgenda.Dominio.Test", "TestProject1\eAgenda.Dominio.Test.csproj", "{D424D090-586E-4BC3-80B9-5008138E70D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAgendaMedica.Dominio.Test", "TestProject1\eAgendaMedica.Dominio.Test.csproj", "{D424D090-586E-4BC3-80B9-5008138E70D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eAgendaMedica.Infra.Orm.Test", "eAgendaMedica.Infra.Orm.Test\eAgendaMedica.Infra.Orm.Test.csproj", "{2EB9346B-36D8-4FA4-9742-D6028F627359}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAgendaMedica.Infra.Orm.Test", "eAgendaMedica.Infra.Orm.Test\eAgendaMedica.Infra.Orm.Test.csproj", "{2EB9346B-36D8-4FA4-9742-D6028F627359}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

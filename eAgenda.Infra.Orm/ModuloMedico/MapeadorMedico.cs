@@ -19,7 +19,8 @@ namespace eAgendaMedica.Infra.Orm.ModuloMedico
             builder.Property(x => x.CRM).HasColumnType("char(8)").IsRequired();
             builder.Property(x => x.EmAtividade).HasColumnType("bit");
 
-            builder.HasMany(x => x.HorasOcupadas);
+            builder.HasMany(x => x.HorasOcupadas)
+                   .WithOne().OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

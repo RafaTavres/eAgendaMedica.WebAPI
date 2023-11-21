@@ -31,7 +31,12 @@ namespace eAgendaMedica.WebAPI.Config.AutoMapperConfig
         }
         public void Process(InserirAtividadeViewModel source, Atividade destination, ResolutionContext context)
         {
-            destination.Medicos = repositorioMedico.SelecionarMuitos(source.IdsMedicos);
+            var Medicos = repositorioMedico.SelecionarMuitos(source.IdsMedicos);
+
+            foreach (var m in Medicos)
+            {
+                destination.AdicionarMedico(m);
+            }
         }
     }
 }

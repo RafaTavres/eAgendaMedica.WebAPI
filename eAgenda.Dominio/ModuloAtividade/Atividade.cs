@@ -51,6 +51,7 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
 
         public void AdicionarMedico(Medico medico)
         {
+            medico.AdicionarAtividade(this);
             Medicos.Add(medico);
         }
 

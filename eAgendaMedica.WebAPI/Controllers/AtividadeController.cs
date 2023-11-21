@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using eAgenda.WebApi.Controllers.Shared;
 using eAgendaMedica.Aplicacao.ModuloAtividade;
-using eAgendaMedica.Aplicacao.ModuloAtividade;
-using eAgendaMedica.Aplicacao.ModuloMedico;
 using eAgendaMedica.Dominio.ModuloAtividade;
-using eAgendaMedica.Dominio.ModuloMedico;
 using eAgendaMedica.WebAPI.ViewModels.ModuloAtividade;
 using eAgendaMedica.WebAPI.ViewModels.ModuloMedico;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +37,7 @@ namespace eAgendaMedica.WebAPI.Controllers
         }
 
 
-        [HttpGet("visualicao-completa/{id}")]
+        [HttpGet("visualizacao-completa/{id}")]
 
         [ProducesResponseType(typeof(VisualizarAtividadeViewModel), 200)]
         [ProducesResponseType(typeof(string[]), 404)]

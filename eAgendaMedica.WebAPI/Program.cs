@@ -30,6 +30,17 @@ namespace eAgendaMedica.WebAPI
               .WriteTo.Console()
               .CreateLogger();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
+
             builder.Logging.ClearProviders();
 
             builder.Services.AddSerilog(Log.Logger);
@@ -63,6 +74,7 @@ namespace eAgendaMedica.WebAPI
 
             app.UseAuthorization();
 
+            app.UseCors();
 
             app.MapControllers();
 

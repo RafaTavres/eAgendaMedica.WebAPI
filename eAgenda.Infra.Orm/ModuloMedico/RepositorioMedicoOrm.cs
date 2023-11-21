@@ -18,6 +18,10 @@ namespace eAgendaMedica.Infra.Orm.ModuloMedico
         {
         }
 
+        public override List<Medico> SelecionarTodos()
+        {
+            return registros.Include(x => x.HorasOcupadas).ToList();
+        }
         public override Medico SelecionarPorId(Guid id)
         {
             return registros

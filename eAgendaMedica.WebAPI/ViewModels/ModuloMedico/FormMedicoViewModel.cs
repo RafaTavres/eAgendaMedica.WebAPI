@@ -4,6 +4,5 @@
     {
         public string CRM { get; set; }
         public string Nome { get; set; }
-        public bool EmAtividade { get; set; }
     }
 }

@@ -13,6 +13,7 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
                    .NotNull().NotEmpty().CRM();
 
             RuleFor(x => x.Nome).NotNull().NotEmpty();
+
         }
     }
 }

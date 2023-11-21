@@ -13,6 +13,8 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
             RuleFor(x => x.DataRealizacao)
                    .NotNull().NotEmpty();
 
+            RuleFor(x => x.Medicos).NotEmpty();
+
 
             RuleFor(x => x.HoraInicio).LessThan(x => x.HoraTermino)
                     .WithMessage("Horário de ínicio deve ser menor que Horário de Términio");

@@ -83,6 +83,7 @@ namespace eAgendaMedica.Dominio.ModuloMedico
 
         public void AdicionarAtividade(Atividade atividade)
         {
+            AdicionarHorario(atividade.DataRealizacao,atividade.HoraInicio,atividade.HoraTermino);
             Atividades.Add(atividade);    
         }
         public TimeSpan CalcularHorasOcupadas(DateTime dataInicial,DateTime dataFinal)

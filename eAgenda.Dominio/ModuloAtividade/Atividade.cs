@@ -11,7 +11,6 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
         public Atividade()
         {
             Medicos = new List<Medico>();
-            AtribuirAtividade();
         }
 
         public Atividade(DateTime d, TimeSpan hi, TimeSpan ht, bool f,TipoAtividade t,string a)
@@ -24,7 +23,6 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
             Assunto = a;
             Medicos = new List<Medico>();
             TempoDeDescanso = t.TempoDeDescanso;
-            AtribuirAtividade();
         }
 
         public string Assunto { get; set; }

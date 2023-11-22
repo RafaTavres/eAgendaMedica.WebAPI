@@ -30,7 +30,7 @@ namespace eAgendaMedica.Infra.Orm.ModuloAtividade
                 .WithMany(x => x.Atividades)
                 .UsingEntity(x =>
                     x.ToTable("TBAtividade_TBMedico")
-                ); ;
+                );
         }
     }
 }

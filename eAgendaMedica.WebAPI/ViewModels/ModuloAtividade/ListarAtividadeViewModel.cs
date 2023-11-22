@@ -10,6 +10,6 @@ namespace eAgendaMedica.WebAPI.ViewModels.ModuloAtividade
         public string HoraInicio { get; set; }
         public string HoraTermino { get; set; }
         public string TempoDeDescanso { get; set; }
-        public TipoAtividadeEnum TipoAtividade { get; set; }
+        public int TipoAtividadeEnum { get; set; }
     }
 }

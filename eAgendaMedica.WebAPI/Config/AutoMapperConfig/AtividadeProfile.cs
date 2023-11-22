@@ -17,7 +17,9 @@ namespace eAgendaMedica.WebAPI.Config.AutoMapperConfig
 
             CreateMap<InserirAtividadeViewModel, Atividade>()
                 .ForMember(destino => destino.Medicos, opt => opt.Ignore())
-                .AfterMap<InserirAtividadeMappingAction>();
+                .ForMember(destino => destino.TipoAtividadeEnum, opt => opt.Ignore())
+                .AfterMap<InserirAtividadeMappingAction>()
+                .AfterMap<InserirTipoDeAtividadeMappingAction>();
 
         }
     }
@@ -37,6 +39,26 @@ namespace eAgendaMedica.WebAPI.Config.AutoMapperConfig
             {
                 destination.AdicionarMedico(m);
             }
+        }
+    }
+
+    public class InserirTipoDeAtividadeMappingAction : IMappingAction<InserirAtividadeViewModel, Atividade>
+    {
+        public InserirTipoDeAtividadeMappingAction()
+        {
+        }
+        public void Process(InserirAtividadeViewModel source, Atividade destination, ResolutionContext context)
+        {
+           if(source.TipoAtividade == TipoAtividadeEnum.Cirurgia)
+            {
+                destination.TipoAtividadeEnum = 0;
+            }
+            else
+            {
+                destination.TipoAtividadeEnum = (TipoAtividadeEnum)1;
+            }
+
+            destination.AtribuirAtividade();
         }
     }
 }

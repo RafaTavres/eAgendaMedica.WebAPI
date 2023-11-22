@@ -8,7 +8,7 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
 {
     public enum TipoAtividadeEnum
     {
-        Cirurgia,
-        Consulta
+        Cirurgia = 0,
+        Consulta = 1,
     }
 }

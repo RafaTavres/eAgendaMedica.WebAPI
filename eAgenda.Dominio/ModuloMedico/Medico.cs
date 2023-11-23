@@ -101,6 +101,23 @@ namespace eAgendaMedica.Dominio.ModuloMedico
 
             return horas_trabalhadas;
         }
+        public bool VerificarSeEstahEmAtividade()
+        {
+
+            var HoraAtual = DateTime.Now.TimeOfDay;
+
+            foreach (var horario in HorasOcupadas)
+            {
+                if (horario.DiaDaAtividade.Date == DateTime.UtcNow.Date && horario.HoraInicio <= HoraAtual && horario.HoraFinal >= HoraAtual)
+                {
+                    EmAtividade = true;
+                    return true;
+                }
+               
+            }
+            EmAtividade = false;
+            return false;
+        }
 
         public bool VerificarHorarioLivre(HoraOcupada horario)
         {

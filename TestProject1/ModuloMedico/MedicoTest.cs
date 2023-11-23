@@ -4,7 +4,7 @@ using eAgendaMedica.Dominio.ModuloMedico;
 namespace eAgendaMedica.Dominio.Test.ModuloMedico
 {
     [TestClass]
-    public class MedicoTest
+    public class AtividadeTest
     {
         [TestMethod]
         public void Medico_Nao_Deve_Ter_Dois_Horarios_Iguais()
@@ -46,12 +46,31 @@ namespace eAgendaMedica.Dominio.Test.ModuloMedico
             var t = new Medico();
             t.AdicionarHorario(DateTime.UtcNow.AddMinutes(10), new TimeSpan(1000), new TimeSpan(2000));
             t.AdicionarHorario(DateTime.UtcNow.AddDays(3), new TimeSpan(1000), new TimeSpan(2000));
-            
+
             //action
             var resultado = t.CalcularHorasOcupadas(DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
 
             //assert
             Assert.AreEqual(new TimeSpan(1000), resultado);
+
         }
+
+
+        [TestMethod]
+        public void Medico_deve_verificar_se_estah_em_atividade()
+        {
+            //arrange
+            var t = new Medico();
+            t.AdicionarHorario(DateTime.UtcNow.AddMinutes(10), new TimeSpan(1000), new TimeSpan(2000));
+            t.AdicionarHorario(DateTime.UtcNow,DateTime.UtcNow.TimeOfDay.Add(new TimeSpan(0, 1, 0)), DateTime.UtcNow.TimeOfDay.Add(new TimeSpan(1, 1, 1)));
+
+            //action
+            var resultado = t.VerificarSeEstahEmAtividade();
+
+            //assert
+            Assert.AreEqual(true, resultado) ;
+
+        }
+
     }
 }

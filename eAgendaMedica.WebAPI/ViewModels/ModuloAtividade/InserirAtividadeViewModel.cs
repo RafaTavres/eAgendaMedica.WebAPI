@@ -8,7 +8,7 @@ namespace eAgendaMedica.WebAPI.ViewModels.ModuloAtividade
         public DateTime DataRealizacao { get; set; }
         public string HoraInicio { get; set; }
         public string HoraTermino { get; set; }
-        public TipoAtividadeEnum TipoAtividade { get; set; }
+        public TipoAtividadeEnum TipoAtividadeEnum { get; set; }
         public List<Guid> IdsMedicos { get; set; }
     }
 }

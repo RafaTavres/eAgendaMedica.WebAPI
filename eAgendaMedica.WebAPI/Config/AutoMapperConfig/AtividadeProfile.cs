@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using eAgendaMedica.Dominio.ModuloAtividade;
+using eAgendaMedica.Dominio.ModuloMedico;
 using eAgendaMedica.WebAPI.ViewModels.ModuloAtividade;
 using eAgendaMedica.WebAPI.ViewModels.ModuloMedico;
 
@@ -33,6 +34,8 @@ namespace eAgendaMedica.WebAPI.Config.AutoMapperConfig
         }
         public void Process(InserirAtividadeViewModel source, Atividade destination, ResolutionContext context)
         {
+            destination.Medicos = new List<Medico>();
+
             var Medicos = repositorioMedico.SelecionarMuitos(source.IdsMedicos);
 
             foreach (var m in Medicos)
@@ -49,7 +52,7 @@ namespace eAgendaMedica.WebAPI.Config.AutoMapperConfig
         }
         public void Process(InserirAtividadeViewModel source, Atividade destination, ResolutionContext context)
         {
-           if(source.TipoAtividade == TipoAtividadeEnum.Cirurgia)
+           if(source.TipoAtividadeEnum == TipoAtividadeEnum.Cirurgia)
             {
                 destination.TipoAtividadeEnum = 0;
             }

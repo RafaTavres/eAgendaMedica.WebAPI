@@ -130,6 +130,7 @@ namespace eAgendaMedica.Aplicacao.ModuloMedico
                 var medicos = repositorioMedico.SelecionarTodos();
 
                 medicos.ForEach(m => m.VerificarSeEstahEmAtividade());
+                medicos.ForEach(m => m.VerificarDescanso());
 
                 Log.Logger.Information("medicos selecionados com sucesso");
 
@@ -152,6 +153,9 @@ namespace eAgendaMedica.Aplicacao.ModuloMedico
             try
             {
                 var medico = repositorioMedico.SelecionarPorId(id);
+
+                medico.VerificarSeEstahEmAtividade();
+                medico.VerificarDescanso();
 
                 if (medico == null)
                 {
@@ -209,6 +213,7 @@ namespace eAgendaMedica.Aplicacao.ModuloMedico
                 var medicos = repositorioMedico.SelecionarTop10MedicosMaisTrabalhadores(dataInicial,dataFinal);
 
                 medicos.ForEach(m => m.VerificarSeEstahEmAtividade());
+                medicos.ForEach(m => m.VerificarDescanso());
 
                 Log.Logger.Information("medicos selecionados com sucesso");
 

@@ -10,12 +10,12 @@ namespace eAgendaMedica.Dominio.Test.ModuloMedico
         public void Medico_Nao_Deve_Ter_Dois_Horarios_Iguais()
         {
             //arrange
-            var t = new Medico();
+            var m = new Medico();
             HoraOcupada hora = new HoraOcupada(DateTime.UtcNow, new TimeSpan(3000), new TimeSpan(4000));
-            t.AdicionarHorario(hora);
+            m.AdicionarHorario(hora);
 
             //action
-            var resultado = t.VerificarHorarioLivre(hora);
+            var resultado = m.VerificarHorarioLivre(hora);
 
             //assert
             Assert.AreEqual(false, resultado);
@@ -25,15 +25,15 @@ namespace eAgendaMedica.Dominio.Test.ModuloMedico
         public void Medico_Deve_inserir_uma_atividade()
         {
             //arrange
-            var t = new Medico();
+            var m = new Medico();
             Atividade atividade = new Atividade();
             atividade.DataRealizacao = DateTime.UtcNow;
             atividade.HoraInicio = new TimeSpan(1000);
             atividade.HoraTermino = new TimeSpan(2000);
-            t.AdicionarAtividade(atividade);
+            m.AdicionarAtividade(atividade);
 
             //action
-            var resultado = t.Atividades.Count();
+            var resultado = m.Atividades.Count();
 
             //assert
             Assert.AreEqual(1, resultado);
@@ -43,12 +43,12 @@ namespace eAgendaMedica.Dominio.Test.ModuloMedico
         public void Medico_calcular_suas_horas_de_trabalho()
         {
             //arrange
-            var t = new Medico();
-            t.AdicionarHorario(DateTime.UtcNow.AddMinutes(10), new TimeSpan(1000), new TimeSpan(2000));
-            t.AdicionarHorario(DateTime.UtcNow.AddDays(3), new TimeSpan(1000), new TimeSpan(2000));
+            var m = new Medico();
+            m.AdicionarHorario(DateTime.UtcNow.AddMinutes(10), new TimeSpan(1000), new TimeSpan(2000));
+            m.AdicionarHorario(DateTime.UtcNow.AddDays(3), new TimeSpan(1000), new TimeSpan(2000));
 
             //action
-            var resultado = t.CalcularHorasOcupadas(DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
+            var resultado = m.CalcularHorasOcupadas(DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
 
             //assert
             Assert.AreEqual(new TimeSpan(1000), resultado);
@@ -60,15 +60,55 @@ namespace eAgendaMedica.Dominio.Test.ModuloMedico
         public void Medico_deve_verificar_se_estah_em_atividade()
         {
             //arrange
-            var t = new Medico();
-            t.AdicionarHorario(DateTime.UtcNow.AddMinutes(10), new TimeSpan(1000), new TimeSpan(2000));
-            t.AdicionarHorario(DateTime.UtcNow,DateTime.UtcNow.TimeOfDay.Add(new TimeSpan(0, 1, 0)), DateTime.UtcNow.TimeOfDay.Add(new TimeSpan(1, 1, 1)));
+            var m = new Medico();
+            m.AdicionarHorario(DateTime.UtcNow.AddMinutes(10), new TimeSpan(1000), new TimeSpan(2000));
+            m.AdicionarHorario(DateTime.UtcNow,DateTime.UtcNow.TimeOfDay.Add(new TimeSpan(0, 1, 0)), DateTime.UtcNow.TimeOfDay.Add(new TimeSpan(1, 1, 1)));
 
             //action
-            var resultado = t.VerificarSeEstahEmAtividade();
+            var resultado = m.VerificarSeEstahEmAtividade();
 
             //assert
             Assert.AreEqual(true, resultado) ;
+
+        }
+
+        [TestMethod]
+        public void Medico_deve_verificar_o_tempo_de_descanso()
+        {
+            //arrange
+            var m = new Medico();
+            var a = new Atividade();
+            a.DataRealizacao = DateTime.Now.Date;
+            a.HoraTermino = new TimeSpan(15, 49, 00);
+            a.TipoAtividadeEnum = TipoAtividadeEnum.Consulta;
+            m.Atividades.Add(a);
+            a.AtribuirAtividade();
+
+            //action
+            var resultado = m.VerificarDescanso();
+
+            //assert
+            Assert.AreEqual(true, resultado);
+
+        }
+
+        [TestMethod]
+        public void Medico_deve_verificar_o_tempo_de_descanso_em_cirurgias()
+        {
+            //arrange
+            var m = new Medico();
+            var a = new Atividade();
+            a.DataRealizacao = DateTime.Now.Date;
+            a.HoraTermino = new TimeSpan(15, 49, 00);
+            a.TipoAtividadeEnum = TipoAtividadeEnum.Cirurgia;
+            m.Atividades.Add(a);
+            a.AtribuirAtividade();
+
+            //action
+            var resultado = m.VerificarDescanso();
+
+            //assert
+            Assert.AreEqual(true, resultado);
 
         }
 

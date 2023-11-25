@@ -12,6 +12,7 @@ namespace eAgendaMedica.WebAPI.ViewModels.ModuloMedico
             public string CRM { get; set; }
             public string Nome { get; set; }
             public bool EmAtividade { get; set; }
+            public string HorasDeDescanso { get; set; }
             public List<HorasOcupadasViewModel> HorasOcupadas { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
     {
         public Consulta()
         {
-            TempoDeDescanso = new TimeSpan(2000);
+            TempoDeDescanso = new TimeSpan(0, 20, 0);
         }
     }
 }

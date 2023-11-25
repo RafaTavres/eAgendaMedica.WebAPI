@@ -17,13 +17,14 @@ namespace eAgendaMedica.Dominio.ModuloMedico
             Atividades = new List<Atividade>();
         }
 
-        public Medico(string c,string n, bool ea)
+        public Medico(string c,string n, bool ea,TimeSpan hd)
         {
             CRM = c;
             Nome = n;
             EmAtividade = ea;
             HorasOcupadas = new List<HoraOcupada>();
             Atividades = new List<Atividade>();
+            HorasDeDescanso = hd;
         }
 
         public string CRM { get; set; }
@@ -31,6 +32,7 @@ namespace eAgendaMedica.Dominio.ModuloMedico
         public bool EmAtividade { get; set; }
         public List<HoraOcupada> HorasOcupadas { get; set; }
         public List<Atividade> Atividades { get; set; }
+        public TimeSpan HorasDeDescanso { get; set; }
 
         public override void Atualizar(Medico registro)
         {
@@ -40,6 +42,7 @@ namespace eAgendaMedica.Dominio.ModuloMedico
             EmAtividade= registro.EmAtividade;
             HorasOcupadas = registro.HorasOcupadas;
             Atividades = registro.Atividades;
+            HorasDeDescanso = registro.HorasDeDescanso;
         }
 
         public Medico Clonar()
@@ -55,7 +58,8 @@ namespace eAgendaMedica.Dominio.ModuloMedico
                   Nome == medico.Nome &&
                   EmAtividade == medico.EmAtividade &&
                   HorasOcupadas == medico.HorasOcupadas &&
-                  Atividades == medico.Atividades;
+                  Atividades == medico.Atividades &&
+                  HorasDeDescanso == medico.HorasDeDescanso;
 
         }
         public override string? ToString()
@@ -83,9 +87,29 @@ namespace eAgendaMedica.Dominio.ModuloMedico
 
         public void AdicionarAtividade(Atividade atividade)
         {
-            AdicionarHorario(atividade.DataRealizacao,atividade.HoraInicio,atividade.HoraTermino);
-            Atividades.Add(atividade);    
+            HoraOcupada horas = new HoraOcupada(atividade.DataRealizacao, atividade.HoraInicio, atividade.HoraTermino);
+            if (VerificarHorarioLivre(horas) == true)
+            {
+                AdicionarHorario(atividade.DataRealizacao, atividade.HoraInicio, atividade.HoraTermino);
+                Atividades.Add(atividade);
+            }    
         }
+
+        public bool VerificarDescanso()
+        {
+            foreach (var a in Atividades)
+            {
+                var limiteDescanso = a.HoraTermino + a.TempoDeDescanso;
+
+                if (a.DataRealizacao.Date == DateTime.Now.Date && limiteDescanso > DateTime.Now.TimeOfDay)
+                {
+                    HorasDeDescanso = limiteDescanso - DateTime.Now.TimeOfDay;
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public TimeSpan CalcularHorasOcupadas(DateTime dataInicial,DateTime dataFinal)
         {
             var horas_trabalhadas = new TimeSpan();
@@ -123,7 +147,7 @@ namespace eAgendaMedica.Dominio.ModuloMedico
         {
             foreach (var h in HorasOcupadas)
             {
-                if (h.Equals(horario))
+                if (h.Equals(horario) && HorasDeDescanso != new TimeSpan(0,0,0))
                 {
                     return false;
                 }

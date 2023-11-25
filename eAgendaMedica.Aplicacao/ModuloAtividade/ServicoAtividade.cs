@@ -128,6 +128,8 @@ namespace eAgendaMedica.Aplicacao.ModuloAtividade
             {
                 var Atividades = repositorioAtividade.SelecionarTodos();
 
+                Atividades.ForEach(a => a.VerificarSeAtividadeEstahFinalizada());
+
                 Log.Logger.Information("Atividades selecionados com sucesso");
 
                 return Result.Ok(Atividades);
@@ -149,6 +151,8 @@ namespace eAgendaMedica.Aplicacao.ModuloAtividade
             try
             {
                 var Atividade = repositorioAtividade.SelecionarPorId(id);
+
+                Atividade.VerificarSeAtividadeEstahFinalizada();
 
                 if (Atividade == null)
                 {

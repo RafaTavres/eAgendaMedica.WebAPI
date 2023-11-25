@@ -61,9 +61,15 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
         public void AtribuirAtividade()
         {
             if(TipoAtividadeEnum == TipoAtividadeEnum.Cirurgia)
+            {
                 TipoAtividade = new Cirurgias();
+                TempoDeDescanso = TipoAtividade.TempoDeDescanso;
+            }
             else
+            {
                 TipoAtividade = new Consulta();
+                TempoDeDescanso = TipoAtividade.TempoDeDescanso;
+            }
         }
 
 
@@ -88,6 +94,20 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
         public override string? ToString()
         {
             return " - " + Assunto + " - Data:  "+ DataRealizacao.ToString("d");
+        }
+
+        public bool VerificarSeAtividadeEstahFinalizada()
+        {
+            if(DataRealizacao.Date < DateTime.Now.Date || DataRealizacao.Date == DateTime.Now.Date && HoraTermino < DateTime.Now.TimeOfDay)
+            {
+                Finalizada = true;
+                return true;
+            }
+            else
+            {
+                Finalizada = false;
+                return false;
+            }
         }
     }
 }

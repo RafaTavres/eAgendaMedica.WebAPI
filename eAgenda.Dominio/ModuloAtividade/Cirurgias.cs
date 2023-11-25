@@ -12,7 +12,7 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
      
         public Cirurgias()
         {
-            TempoDeDescanso = new TimeSpan(40000);
+            TempoDeDescanso = new TimeSpan(4,0,0);
         }
     }
 }

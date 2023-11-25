@@ -20,7 +20,7 @@ namespace eAgendaMedica.Infra.Orm.ModuloMedico
 
         public override List<Medico> SelecionarTodos()
         {
-            return registros.Include(x => x.HorasOcupadas).ToList();
+            return registros.Include(x => x.Atividades).Include(x => x.HorasOcupadas).ToList();
         }
         public override Medico SelecionarPorId(Guid id)
         {
@@ -37,6 +37,7 @@ namespace eAgendaMedica.Infra.Orm.ModuloMedico
         public List<Medico> SelecionarTop10MedicosMaisTrabalhadores(DateTime dataInicio, DateTime dataTermino)
         {
             return registros
+                .Include(x => x.Atividades)
                 .Include(x => x.HorasOcupadas)
                 .AsEnumerable()
                 .OrderByDescending(x => x.CalcularHorasOcupadas(dataInicio, dataTermino)).Take(10).ToList();

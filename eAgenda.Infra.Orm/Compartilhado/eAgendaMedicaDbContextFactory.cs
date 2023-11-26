@@ -1,6 +1,7 @@
 ﻿using eAgendaMedica.Infra.Orm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
 namespace GeradorTestes.Infra.Orm
 {
@@ -10,7 +11,11 @@ namespace GeradorTestes.Infra.Orm
         {
             var builder = new DbContextOptionsBuilder<eAgendaMedicaDbContext>();
 
-            builder.UseSqlServer(@"Data Source=(LOCALDB)\MSSQLLOCALDB;Initial Catalog=eAgendaMedicaOrm;Integrated Security=True");
+            var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+
+            var connectionString = configuration.GetConnectionString("PostgreSql");
+
+            builder.UseNpgsql(connectionString);
 
             return new eAgendaMedicaDbContext(builder.Options);
         }

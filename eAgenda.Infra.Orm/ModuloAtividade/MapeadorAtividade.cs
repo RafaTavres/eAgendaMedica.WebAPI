@@ -20,7 +20,7 @@ namespace eAgendaMedica.Infra.Orm.ModuloAtividade
             builder.Property(x => x.DataRealizacao).IsRequired();
             builder.Property(x => x.HoraInicio).HasColumnType("bigint").IsRequired();
             builder.Property(x => x.HoraTermino).HasColumnType("bigint").IsRequired();
-            builder.Property(x => x.Finalizada).HasColumnType("bit").IsRequired();
+            builder.Property(x => x.Finalizada).HasColumnType("bool").IsRequired();
             builder.Property(x => x.TipoAtividadeEnum).HasConversion<int>().IsRequired();
 
             builder.Property(x => x.Assunto).HasColumnType("varchar(200)").IsRequired();

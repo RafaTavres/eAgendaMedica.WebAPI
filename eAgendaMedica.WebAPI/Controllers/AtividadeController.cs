@@ -81,7 +81,7 @@ namespace eAgendaMedica.WebAPI.Controllers
         [ProducesResponseType(typeof(string[]), 400)]
         [ProducesResponseType(typeof(string[]), 404)]
         [ProducesResponseType(typeof(string[]), 500)]
-        public async Task<IActionResult> EditarMedico(Guid id, InserirAtividadeViewModel atividadeViewModel)
+        public async Task<IActionResult> EditarAtividade(Guid id, InserirAtividadeViewModel atividadeViewModel)
         {
 
             var result = await servicoAtividade.SelecionarPorId(id);

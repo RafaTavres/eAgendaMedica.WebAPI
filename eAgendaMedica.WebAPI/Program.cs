@@ -68,6 +68,7 @@ namespace eAgendaMedica.WebAPI
                 app.UseSwaggerUI();
             }
 
+
             app.UseMiddleware<ManipuladorExcecoes>();
 
             app.UseHttpsRedirection();

@@ -2,8 +2,8 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using eAgendaMedica.Infra.Orm;
 
 #nullable disable
@@ -18,17 +18,17 @@ namespace eAgendaMedica.Infra.Orm.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.22")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("AtividadeMedico", b =>
                 {
                     b.Property<Guid>("AtividadesId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("MedicosId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.HasKey("AtividadesId", "MedicosId");
 
@@ -40,17 +40,17 @@ namespace eAgendaMedica.Infra.Orm.Migrations
             modelBuilder.Entity("eAgendaMedica.Dominio.ModuloAtividade.Atividade", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Assunto")
                         .IsRequired()
                         .HasColumnType("varchar(200)");
 
                     b.Property<DateTime>("DataRealizacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("Finalizada")
-                        .HasColumnType("bit");
+                        .HasColumnType("bool");
 
                     b.Property<long>("HoraInicio")
                         .HasColumnType("bigint");
@@ -62,7 +62,7 @@ namespace eAgendaMedica.Infra.Orm.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<int>("TipoAtividadeEnum")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -72,10 +72,10 @@ namespace eAgendaMedica.Infra.Orm.Migrations
             modelBuilder.Entity("eAgendaMedica.Dominio.ModuloMedico.HoraOcupada", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("DiaDaAtividade")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("HoraFinal")
                         .HasColumnType("bigint");
@@ -84,7 +84,7 @@ namespace eAgendaMedica.Infra.Orm.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<Guid?>("MedicoId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -96,14 +96,14 @@ namespace eAgendaMedica.Infra.Orm.Migrations
             modelBuilder.Entity("eAgendaMedica.Dominio.ModuloMedico.Medico", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("CRM")
                         .IsRequired()
                         .HasColumnType("char(8)");
 
                     b.Property<bool>("EmAtividade")
-                        .HasColumnType("bit");
+                        .HasColumnType("bool");
 
                     b.Property<string>("Nome")
                         .IsRequired()

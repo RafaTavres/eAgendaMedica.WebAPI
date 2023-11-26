@@ -14,7 +14,8 @@ namespace eAgendaMedica.Infra.Orm
     {
        
         public eAgendaMedicaDbContext(DbContextOptions options) : base(options)
-        {          
+        {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }    
 
         public void GravarDados()

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eAgendaMedica.Infra.Orm.Migrations
 {
-    public partial class UpdatingBaseTables : Migration
+    public partial class PostgreMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,12 +13,13 @@ namespace eAgendaMedica.Infra.Orm.Migrations
                 name: "TBAtividade",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DataRealizacao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Assunto = table.Column<string>(type: "varchar(200)", nullable: false),
+                    DataRealizacao = table.Column<DateTime>(type: "date", nullable: false),
                     HoraInicio = table.Column<long>(type: "bigint", nullable: false),
                     HoraTermino = table.Column<long>(type: "bigint", nullable: false),
-                    Finalizada = table.Column<bool>(type: "bit", nullable: false),
-                    Assunto = table.Column<string>(type: "varchar(200)", nullable: false),
+                    Finalizada = table.Column<bool>(type: "bool", nullable: false),
+                    TipoAtividadeEnum = table.Column<int>(type: "integer", nullable: false),
                     TempoDeDescanso = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -30,10 +31,10 @@ namespace eAgendaMedica.Infra.Orm.Migrations
                 name: "TBMedico",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     CRM = table.Column<string>(type: "char(8)", nullable: false),
                     Nome = table.Column<string>(type: "varchar(200)", nullable: false),
-                    EmAtividade = table.Column<bool>(type: "bit", nullable: false)
+                    EmAtividade = table.Column<bool>(type: "bool", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,8 +45,8 @@ namespace eAgendaMedica.Infra.Orm.Migrations
                 name: "TBAtividade_TBMedico",
                 columns: table => new
                 {
-                    AtividadesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MedicosId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    AtividadesId = table.Column<Guid>(type: "uuid", nullable: false),
+                    MedicosId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,11 +69,11 @@ namespace eAgendaMedica.Infra.Orm.Migrations
                 name: "TBHoraOcupadas",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DiaDaAtividade = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    DiaDaAtividade = table.Column<DateTime>(type: "date", nullable: false),
                     HoraInicio = table.Column<long>(type: "bigint", nullable: false),
                     HoraFinal = table.Column<long>(type: "bigint", nullable: false),
-                    MedicoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    MedicoId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -81,7 +82,8 @@ namespace eAgendaMedica.Infra.Orm.Migrations
                         name: "FK_TBHoraOcupadas_TBMedico_MedicoId",
                         column: x => x.MedicoId,
                         principalTable: "TBMedico",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

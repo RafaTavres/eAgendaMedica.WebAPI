@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -75,8 +76,10 @@ namespace eAgendaMedica.Dominio.ModuloMedico
         public void AdicionarHorario(DateTime diaDaAtiviadade,TimeSpan horarioInicio,TimeSpan horarioFinal)
         {
             HoraOcupada horas = new HoraOcupada(diaDaAtiviadade,horarioInicio,horarioFinal);
-            if(VerificarHorarioLivre(horas) == true)
+            if (VerificarHorarioLivre(horas) == true)
                 HorasOcupadas.Add(horas);
+
+
         }
 
         public void AdicionarHorario(HoraOcupada horas)
@@ -92,7 +95,9 @@ namespace eAgendaMedica.Dominio.ModuloMedico
             {
                 AdicionarHorario(atividade.DataRealizacao, atividade.HoraInicio, atividade.HoraTermino);
                 Atividades.Add(atividade);
-            }    
+            }
+            else
+                throw new Exception("Conflito de Horario");
         }
 
         public bool VerificarDescanso()
@@ -143,16 +148,24 @@ namespace eAgendaMedica.Dominio.ModuloMedico
             return false;
         }
 
-        public bool VerificarHorarioLivre(HoraOcupada horario)
+        public bool VerificarHorarioLivre(HoraOcupada horas)
         {
-            foreach (var h in HorasOcupadas)
+            foreach (var a in Atividades)
             {
-                if (h.Equals(horario) && HorasDeDescanso != new TimeSpan(0,0,0))
+                var limiteDescanso = a.HoraTermino + a.TempoDeDescanso;
+
+                foreach (var h in HorasOcupadas)
                 {
-                    return false;
+                    if (h.Equals(horas) || horas.DiaDaAtividade.Date == a.DataRealizacao.Date && horas.HoraInicio >= a.HoraTermino && horas.HoraInicio <= limiteDescanso)
+                    {
+                        return false;
+                    }
                 }
+
             }
+
             return true;
         }
+
     }
 }

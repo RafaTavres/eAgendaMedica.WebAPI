@@ -49,8 +49,15 @@ namespace eAgendaMedica.Dominio.ModuloAtividade
 
         public void AdicionarMedico(Medico medico)
         {
-            medico.AdicionarAtividade(this);
-            Medicos.Add(medico);
+            try
+            {
+                medico.AdicionarAtividade(this);
+                Medicos.Add(medico);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public Atividade Clonar()

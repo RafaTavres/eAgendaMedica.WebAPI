@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using eAgendaMedica.Aplicacao.ModuloMedico;
 
 namespace eAgendaMedica.Aplicacao.ModuloAtividade
 {
@@ -14,12 +15,13 @@ namespace eAgendaMedica.Aplicacao.ModuloAtividade
     {
         private IRepositorioAtividade repositorioAtividade;
         private IContextoPersistencia contextoPersistencia;
-
+        private ServicoMedico servicoMedico;
         public ServicoAtividade(IRepositorioAtividade repositorioAtividade,
-                             IContextoPersistencia contextoPersistencia)
+                             IContextoPersistencia contextoPersistencia,ServicoMedico servicoMedico)
         {
             this.repositorioAtividade = repositorioAtividade;
             this.contextoPersistencia = contextoPersistencia;
+            this.servicoMedico = servicoMedico;
         }
 
         public async Task<Result<Atividade>> Inserir(Atividade Atividade)

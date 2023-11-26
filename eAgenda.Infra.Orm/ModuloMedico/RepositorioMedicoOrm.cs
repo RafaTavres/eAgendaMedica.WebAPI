@@ -31,7 +31,9 @@ namespace eAgendaMedica.Infra.Orm.ModuloMedico
         }
         public List<Medico> SelecionarMuitos(List<Guid> idsSelecionadas)
         {
-            return registros.Where(medico => idsSelecionadas.Contains(medico.Id)).ToList();
+            return registros.Where(medico => idsSelecionadas.Contains(medico.Id))
+                .Include(x => x.Atividades)
+                .Include(x => x.HorasOcupadas).ToList();
         }
 
         public List<Medico> SelecionarTop10MedicosMaisTrabalhadores(DateTime dataInicio, DateTime dataTermino)

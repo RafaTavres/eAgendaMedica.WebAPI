@@ -40,7 +40,15 @@ namespace eAgendaMedica.WebAPI.Config.AutoMapperConfig
 
             foreach (var m in Medicos)
             {
-                destination.AdicionarMedico(m);
+                try
+                {
+
+                    destination.AdicionarMedico(m);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
             }
         }
     }

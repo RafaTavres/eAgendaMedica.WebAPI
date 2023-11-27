@@ -35,9 +35,10 @@ namespace eAgendaMedica.WebAPI
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200")
+                        builder.WithOrigins("http://localhost:4200", "https://e-agenda-medica-e9bc.onrender.com")
                                .AllowAnyHeader()
                                .AllowAnyMethod();
+
                     });
             });
 
